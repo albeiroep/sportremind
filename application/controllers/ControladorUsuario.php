@@ -8,11 +8,24 @@ class ControladorUsuario extends CI_Controller
 
 	public function index()
 	{
+
+		//Se guardan los datos, para repoblar el formulario
+			$data['nombre']='';
+			$data['apellidos']='';
+			$data['ciudad']='';
+			$data['deporte1']='';
+			$data['correo']='';
+			$data['nombre_usuario']='';
+			$data['contraseña']='';
+			$data['repetir_contraseña']='';
+
 		//Para cargar los nombres de los deportes en la lista desplegable
 		$this->load->model('Deporte');
 		$data['datos']=$this->Deporte->get_all();
 
+		$this->load->view('header');
 		$this->load->view('Crear_cuenta', $data);
+		$this->load->view('footer');
 	}
 
 	public function crear(){
