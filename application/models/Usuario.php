@@ -101,4 +101,17 @@ class Usuario extends CI_Model {
 		//return $data;
 	}
 	
+	public function delete($id){
+
+		$this->load->database();
+		$this->db->delete('usuario', array('id' => $id ));
+
+	}
+
+	public function agregar_motivo($mensaje){
+
+		$this->load->database();
+		$this->db->insert('motivos', array('motivo' => $mensaje));
+
+	}
 }
