@@ -36,9 +36,9 @@ class Eliminar_cuenta extends CI_Controller {
 		$this->load->view('footer');
 		}
 	}
-		public function eliminar()
-	{
 
+	public function eliminar()
+	{
 		
 		$this->load->model('Usuario');
 

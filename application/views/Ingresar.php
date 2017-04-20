@@ -4,6 +4,24 @@
     $deporte[$dato->nombre]=$dato->nombre;
   }
 
+  $nombre=(isset($nombre)) ? $nombre=$nombre : $nombre='';
+
+  $apellidos=(isset($apellidos)) ? $apellidos=$apellidos : $apellidos='';
+
+  $ciudad=(isset($ciudad)) ? $ciudad=$ciudad : $ciudad='';
+
+  $correo=(isset($correo)) ? $correo=$correo : $correo='';
+
+  $nombre_usuario=(isset($nombre_usuario)) ? $nombre_usuario=$nombre_usuario : $nombre_usuario='';
+
+  $contraseña=(isset($contraseña)) ? $contraseña=$contraseña : $contraseña='';
+
+  $repetir_contraseña=(isset($repetir_contraseña)) ? $repetir_contraseña=$repetir_contraseña : $repetir_contraseña='';
+
+  $deporte1=(isset($deporte1)) ? $deporte1=$deporte1 : $deporte1='';
+
+  
+
   $nom = array(
           'name'        => 'nombre',
           'value'       => $nombre,
@@ -105,12 +123,13 @@
     <p class="help-block"> La contraseña debe tener por lo menos 1 letra en mayúscula, <br> 1 en minúscula, 1 digito y 1 caracter especial y tener una longitud mayor o igual a 7</p>
 
     <?= form_submit('sbm', 'Crear', 'class="btn btn-primary"'); ?>
-    <?= form_close(); ?>
-    <br>
-
+    
     <?php if (validation_errors()):
     echo validation_errors();
     endif; ?>
+
+    <?= form_close(); ?>
+    <br>
     <?php if(isset($usuario)):
     echo $usuario;
     endif;

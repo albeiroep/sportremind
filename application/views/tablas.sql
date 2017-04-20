@@ -19,6 +19,13 @@ CREATE TABLE deporte (
 	PRIMARY KEY (id)
 ) ENGINE = InnoDB;
 
+CREATE TABLE motivos (
+
+	id              INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	motivos         VARCHAR(30)  NOT NULL,
+	PRIMARY KEY (id)
+) ENGINE = InnoDB;
+
 INSERT INTO deporte values('1','Natación', 'Acuático');
 INSERT INTO deporte values('2','Ciclismo', 'Individual');
 INSERT INTO deporte values('3','Atletismo', 'Individual');

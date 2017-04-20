@@ -1,1 +1,1 @@
-<p><strong>Error porfavor ingresar motivo</strong></p>
+<p><strong>Error por favor ingresar motivo</strong></p>

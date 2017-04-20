@@ -5,33 +5,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 class ControladorUsuario extends CI_Controller
 {
+	public $mensaje='';
 
 	public function index()
 	{
 
-		//Se guardan los datos, para repoblar el formulario
-			$data['nombre']='';
-			$data['apellidos']='';
-			$data['ciudad']='';
-			$data['deporte1']='';
-			$data['correo']='';
-			$data['nombre_usuario']='';
-			$data['contraseña']='';
-			$data['repetir_contraseña']='';
+		//$this->load->library('session');
 
-		//Para cargar los nombres de los deportes en la lista desplegable
-		$this->load->model('Deporte');
-		$data['datos']=$this->Deporte->get_all();
+		if ($this->session->userdata('conectado') == TRUE ){
+			$this->load->view('inicio');
 
-		$this->load->view('header');
-		$this->load->view('Crear_cuenta', $data);
-		$this->load->view('footer');
+		}else{
+
+			//Para cargar los nombres de los deportes en la lista desplegable
+			$this->load->model('Deporte');
+			$data['datos']=$this->Deporte->get_all();
+
+			$this->load->view('header');
+			$this->load->view('Ingresar', $data);
+			$this->load->view('footer');
+
+		}
 	}
 
 	public function crear(){
 
 		//Validación de datos ingresados en el formulario
-		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('nombre', 'nombre', 'required');
 		$this->form_validation->set_rules('apellidos', 'apellidos', 'required');
@@ -51,14 +50,14 @@ class ControladorUsuario extends CI_Controller
 		$this->form_validation->set_message('callback_is_password_strong','La %s no tiene la complejidad requerida');
 
 		//Se carga la librería y se encripta la contraseña
-		$this->load->library('encrypt');
-		$contraseña = $this->encrypt->encode($this->input->post('contrasena'));
+		//$this->load->library('encrypt');
+		//$contraseña = $this->encrypt->encode($this->input->post('contrasena'));
 
 		//Si los datos ingresados en el formulario no son correctos se regresa  a la vista sin guardar los datos en la bd.
 
 		if($this->form_validation->run()===FALSE){
 
-			//Se obtienen los nombres de los deportes que hay en la base de datos
+			//Para cargar los nombres de los deportes en la lista desplegable
 			$this->load->model('Deporte');
 			$data['datos']=$this->Deporte->get_all();
 
@@ -72,33 +71,79 @@ class ControladorUsuario extends CI_Controller
 			$data['contraseña']=$this->input->post('contrasena');
 			$data['repetir_contraseña']=$this->input->post('repetir_contrasena');
 
-			$this->load->view('Crear_cuenta', $data);
+			$this->load->view('header');
+			$this->load->view('Ingresar', $data);
+			$this->load->view('footer', $data);
 
 		}else{
-			$datos = array('nombre' => $this->input->post('nombre'), 'apellidos' => $this->input->post('apellidos'), 'ciudad' => $this->input->post('ciudad'), 'deporte' => $this->input->post('deporte'), 'correo' => $this->input->post('correo'), 'nombre_usuario' => $this->input->post('nombre_usuario'), 'contraseña' => $contraseña);
+			$datos = array('nombre' => $this->input->post('nombre'), 'apellidos' => $this->input->post('apellidos'), 'ciudad' => $this->input->post('ciudad'), 'deporte' => $this->input->post('deporte'), 'correo' => $this->input->post('correo'), 'nombre_usuario' => $this->input->post('nombre_usuario'), 'contraseña' => $this->input->post('contrasena'));
 			
 			$this->load->model('Usuario');
 			$Usuario1=new Usuario($datos);
 			$Usuario1->validar();
 			$Usuario1->registrar();
 			
+			//Para cargar los nombres de los deportes en la lista desplegable
 			$this->load->model('Deporte');
 			$data['datos']=$this->Deporte->get_all();
 
-			//Se guardan los datos, para repoblar el formulario
-			$data['nombre']='';
-			$data['apellidos']='';
-			$data['ciudad']='';
-			$data['deporte1']='';
-			$data['correo']='';
-			$data['nombre_usuario']='';
-			$data['contraseña']='';
-			$data['repetir_contraseña']='';
-
 			$data['usuario']="Los datos fueron registrados satisfactoriamente";
-			$this->load->view('Crear_cuenta',$data);
+			$this->load->view('header');
+			$this->load->view('Ingresar', $data);
+			$this->load->view('footer');
 		}
 
+	}
+
+	public function checklogin(){
+
+		
+		$this->form_validation->set_rules('username','Username','required');
+		$this->form_validation->set_rules('password','Password','required|callback_verifyUser');
+
+		$this->form_validation->set_message('verifyUser', 'Nombre usuario o contraseña es incorrecto');
+		$this->form_validation->set_message('required','El campo %s es obligatorio'); 
+
+
+		if($this->form_validation->run() ==false){
+
+			//Para cargar los nombres de los deportes en la lista desplegable
+			$this->load->model('Deporte');
+			$data['datos']=$this->Deporte->get_all();
+
+			$this->load->view('header');
+			$this->load->view('Ingresar', $data);
+			$this->load->view('footer');
+
+		}else{
+			$nuevos_datos = array(
+				'username' => $this->input->post('username'),
+				'password' => $this->input->post('password'),
+				'identificador' => $this->input->post('username'),
+				'conectado' => TRUE );
+
+			//$this->load->library('session');
+			$this->session->set_userdata($nuevos_datos);
+
+			$this->load->view('header');
+			$this->load->view('inicio');
+			$this->load->view('footer');
+		}
+	}
+
+	public function verifyUser(){
+		$name= $this->input->post('username');
+		$pass= $this->input->post('password');
+
+		$this->load->model('Usuario');
+		$usuario1=new Usuario();
+		if($usuario1->login($name,$pass)){
+			return true;
+
+		}else{
+			return false;
+
+	    }
 	}
 
 	//Función utilizada para comprobar la complejidad de la contraseña ingresada por el usuario
@@ -110,6 +155,83 @@ class ControladorUsuario extends CI_Controller
    	return FALSE;
 	}
 
+	public function vistaEliminar()
+	{
+		$this->load->model('Usuario');
+	
+		$this->load->view('header');
+		$this->load->view('eliminar_cuenta');
+		$this->load->view('footer');
+	}
+
+	public function pregunta_eliminar()
+	{
+		$this->load->model('Usuario');
+
+
+		if ($this->input->post('motivo') == '' ) {
+			
+			$this->load->view('header');
+			$data['mensaje']="Error por favor ingresar el motivo";
+			$this->load->view('eliminar_cuenta', $data);
+			$this->load->view('footer');
+
+		}else{
+
+			$mensaje = $this->input->post('motivo');
+			$this->Usuario->agregar_motivo($mensaje);
+
+			$this->load->view('header');
+			$this->load->view('pregunta');
+			$this->load->view('footer');
+		}
+	}
+
+	public function eliminar()
+	{
+		
+		$this->load->model('Usuario');
+
+		$mensaje = $this->input->post('motivo');
+		//$this->load->library('session');
+		$this->Usuario->delete($this->session->userdata('identificador'));
+
+		session_destroy();
+
+		//Para cargar los nombres de los deportes en la lista desplegable
+		$this->load->model('Deporte');
+		$data['datos']=$this->Deporte->get_all();
+
+		$data['mensaje']="Su cuenta ha sido eliminada satisfactoriamente";
+
+		$this->load->view('header');
+		$this->load->view('ingresar', $data);
+		$this->load->view('footer');
+
+
+	}
+
+	public function logoff(){
+		//$this->load->library('session');
+		session_destroy();
+
+		//Para cargar los nombres de los deportes en la lista desplegable
+		$this->load->model('Deporte');
+		$data['datos']=$this->Deporte->get_all();
+		
+		$this->load->view('header');
+		$this->load->view('Ingresar',$data);
+		$this->load->view('footer');
+
+	}
+
+	public function login(){
+
+		$this->load->view('header');
+		$this->load->view('inicio');
+		$this->load->view('footer');
+
+	}
 
 }
 ?> 

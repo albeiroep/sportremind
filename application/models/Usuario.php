@@ -96,21 +96,31 @@ class Usuario extends CI_Model {
 		];
 
 		return $this->db->insert('usuario', $data);
-		//$data['error']=$this->db->error();
-		//if($data['error'] = $this->db->_error_message());
-		//return $data;
+	}
+
+	public function login($name,$pass){
+		$this->db->select('nombre_usuario,contraseña');
+		$this->db->from('usuario');
+		$this->db->where('nombre_usuario',$name);
+		$this->db->where('contraseña',$pass);
+
+		$query=$this->db->get();
+
+		if($query->num_rows() ==1){
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 	public function delete($id){
 
-		$this->load->database();
-		$this->db->delete('usuario', array('id' => $id ));
+		$this->db->delete('usuario', array('nombre_usuario' => $id ));
 
 	}
 
 	public function agregar_motivo($mensaje){
 
-		$this->load->database();
 		$this->db->insert('motivos', array('motivo' => $mensaje));
 
 	}

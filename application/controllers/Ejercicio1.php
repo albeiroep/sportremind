@@ -4,7 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Ejercicio1 extends CI_Controller {
 
 	public function index(){
-	
+		
+		$this->load->library('session');
 		if ($this->session->userdata('conectado') == TRUE ){
 			$this->load->view('vistalinks');
 		}else{
