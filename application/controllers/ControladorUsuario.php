@@ -87,7 +87,7 @@ class ControladorUsuario extends CI_Controller
 			$this->load->model('Deporte');
 			$data['datos']=$this->Deporte->get_all();
 
-			$data['usuario']="Los datos fueron registrados satisfactoriamente";
+			$data['usuario']="El usuario fue registrado satisfactoriamente";
 			$this->load->view('header');
 			$this->load->view('Ingresar', $data);
 			$this->load->view('footer');
@@ -218,7 +218,7 @@ class ControladorUsuario extends CI_Controller
 		//Para cargar los nombres de los deportes en la lista desplegable
 		$this->load->model('Deporte');
 		$data['datos']=$this->Deporte->get_all();
-		
+
 		$this->load->view('header');
 		$this->load->view('Ingresar',$data);
 		$this->load->view('footer');
