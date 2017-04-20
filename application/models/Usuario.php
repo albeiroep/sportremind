@@ -121,7 +121,7 @@ class Usuario extends CI_Model {
 
 	public function agregar_motivo($mensaje){
 
-		$this->db->insert('motivos', array('motivo' => $mensaje));
+		$this->db->insert('motivos', array('motivos' => $mensaje));
 
 	}
 }
