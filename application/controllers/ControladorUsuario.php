@@ -232,6 +232,122 @@ class ControladorUsuario extends CI_Controller
 		$this->load->view('footer');
 
 	}
+	
+	public function validarCorreo() {
+		
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email|min_length[5]|max_length[125]');
+		
+		if ($this->form_validation->run() == FALSE) {
+			
+			$this->load->view('header');
+			$this->load->view('ValidarCorreo');
+			$this->load->view('footer');
+		} else {
+			$email = $this->input->post('email');
+			$this->db->where('correo', $email);
+			$this->db->from('usuario');
+			$numCorreosRegistrados = $this->db->count_all_results();
+			
+			if ($numCorreosRegistrados == 1) {
+				// Código random para verificar
+				$code = mt_rand('5000', '200000');
+				$data = array(
+						'olvidoContrasenia' => $code
+				);
+				
+				$this->db->where('correo', $email);
+				//if ($this->db->update('usuario', $data)) {
+				$this->load->model('Usuario');
+				if ($this->Usuario->actualizar_Usuario($data)) {
+					// Email enviado
+					$url = "http://localhost/sportremind/index.php/ControladorUsuario/ValidarContrasenia/".$code;
+					$body = "\nHaga clic en este enlace para cambiar la contraseña:\n\n".$url."\n\n";
+					
+					if (mail($email, 'Restablecer Contraseña', $body, 'From: serviciocliente@sportremind.com')) {
+						$this->load->model('Deporte');
+						$data['submit_success'] = true;
+						$data['datos']=$this->Deporte->get_all();
+						echo "<script language=\"javascript\">alert('Para finalizar los cambios ingrese al link enviado a su correo');</script>";
+						$this->load->view('header');
+						$this->load->view('Ingresar', $data);
+						$this->load->view('footer');
+					} else {
+						echo "<script language=\"javascript\">alert('Hubo problemas al enviar el correo. Inténtelo de nuevo');</script>";
+						redirect('ControladorUsuario/ValidarCorreo');
+					}
+				} else {
+					// Error al actualizar
+					echo "<script language=\"javascript\">alert('No se pudo actualizar el usuario. Inténtelo de nuevo');</script>";
+					$data['datos']=$this->Deporte->get_all();
+					$this->load->view('header');
+					$this->load->view('Ingresar', $data);
+					$this->load->view('footer');
+				}
+			} else {
+				// Correo inválido
+				echo "<script language=\"javascript\">alert('El correo proveido no se encuentra registrado');</script>";
+				$this->load->view('header');
+				$this->load->view('ValidarCorreo');
+				$this->load->view('footer');
+			}
+		}
+	}
+	
+	
+	public function ValidarContrasenia() {
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email|min_length[5]|max_length[125]');
+		$this->form_validation->set_rules('password1', 'Contraseña', 'required|min_length[8]|callback_is_password_strong');
+		$this->form_validation->set_rules('password2', 'Confirmar Contraseña', 'required|min_length[8]|callback_is_password_strong');
+		
+		$this->form_validation->set_message('callback_is_password_strong','La contraseña no tiene la complejidad requerida');
+		
+		
+		// ¿Hay post?
+		if ($this->input->post()) {
+			$data['code'] = xss_clean($this->input->post('code'));
+		} else {
+			$data['code'] = xss_clean($this->uri->segment(3));
+		}
+		
+		if ($this->form_validation->run() == FALSE) {
+			$this->load->view('header');
+			$this->load->view('AsignarNuevaContrasenia', $data);
+			$this->load->view('footer');
+		} else {
+			// Coincide el correo y el código?
+			$this->load->model('Usuario');
+			$email = xss_clean($this->input->post('email'));
+			if (!$this->Usuario->does_code_match($data['code'], $email)) {
+				// El código no coincide
+				echo "<script language=\"javascript\">alert('El cambio de contraseña ha expirado. Debe solicitarla nuevamente');</script>";
+				$this->load->view('header');
+				$this->load->view('ValidarCorreo', $data);
+				$this->load->view('footer');
+			} else {// El código coincide
+				
+				$data = array(
+						'contraseña' => $this->input->post('password1'),
+						'olvidoContrasenia' => 0
+				);
+				
+				if ($this->Usuario->update_user($data, $email)) {
+					echo "<script language=\"javascript\">alert('Correo incorrect. Inténtelo de nuevo');</script>";
+					
+				} else
+				{
+					$this->load->model('Deporte');
+					$data['submit_success'] = true;
+					$data['datos']=$this->Deporte->get_all();
+					echo "<script language=\"javascript\">alert('El cambio se ha realizado satisfactoriamente. Ahora puede usar su nueva contraseña');</script>";
+					$this->load->view('header');
+					$this->load->view('Ingresar', $data);
+					$this->load->view('footer');
+				}
+			}
+		}
+	}
 
 }
 ?> 

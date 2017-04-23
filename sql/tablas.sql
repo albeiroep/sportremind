@@ -7,6 +7,7 @@ CREATE TABLE usuario (
 	correo           	VARCHAR(50)  NOT NULL,
 	nombre_usuario   	VARCHAR(50)  NOT NULL,
 	contraseña       	VARCHAR(50)  NOT NULL,
+	olvidoContrasenia	INT(11),
 	PRIMARY KEY (id)
 
 ) ENGINE = InnoDB;
