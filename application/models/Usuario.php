@@ -46,6 +46,14 @@ class Usuario extends CI_Model {
 		}
 	}
 
+	public function actualizar_Usuario($data){
+		if($this->db->update('usuario', $data)) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	}
+	
 	public function validar() {
 		$errores = [];
 
@@ -123,5 +131,40 @@ class Usuario extends CI_Model {
 
 		$this->db->insert('motivos', array('motivos' => $mensaje));
 
+	}
+	
+	public function actualizarUsuario($data, $email) {
+		$this->db->where('correo', $email);
+		$this->db->update('usuario', $data);
+	}
+	
+	public function update_user($data, $email) {
+		$this->db->where('correo', $email);
+		$this->db->update('usuario', $data);
+	}
+	
+	
+	public function does_email_exist($email) {
+		$this->db->where('correo', $email);
+		$this->db->from('usuario');
+		$num_res = $this->db->count_all_results();
+		if ($num_res == 1) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	}
+	
+	public function does_code_match($code, $email) {
+		$this->db->where('correo', $email);
+		$this->db->where('olvidoContrasenia', $code);
+		$this->db->from('usuario');
+		$num_res = $this->db->count_all_results();
+		
+		if ($num_res == 1) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
 	}
 }

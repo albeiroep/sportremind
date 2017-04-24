@@ -91,7 +91,8 @@
           <?= form_password('password','', 'class="form-control"'); ?>
         </div>
         <br>
-
+		<?php echo anchor('ControladorUsuario/ValidarCorreo', '¿Olvidó contraseña?'); ?>
+		
         <?= form_submit('sbm', 'Entrar', 'class="btn btn-primary"'); ?>
       <?= form_close(); ?>
     </div>
