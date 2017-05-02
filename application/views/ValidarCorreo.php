@@ -7,12 +7,14 @@
         <h3>Correo Enviado:</h3>
         <p>Un correo ha sido enviado al correo proveído.</p>
     <?php endif; ?>
-    <table  >
-        <tr>
-            <td>Correo</td>
-            <td><?php echo form_input(array('name' => 'email', 'id' => 'email', 'value' => set_value('email', ''), 'maxlength' => '100', 'size' => '50', 'style' => 'width:100%')); ?></td>
-        </tr>
-    </table>
-    <?php echo form_submit('submit', 'Restablecer Contraseña'); ?>
-    or <?php echo anchor('ControladorUsuario/index', 'Cancelar'); ?>
+        <div class="container">
+            <div class="form-group">
+                <?= form_label('Correo:','','class="form-control"',['id'=>'correo']); ?>
+                <br>
+                <?= form_input('email', set_value('email', ''), 'class="form-control"', ['id'=>'email']); ?>
+            </div>
+        
+            <?= form_submit('sbm', 'Restablecer contraseña', 'class="btn btn-primary"'); ?>
+            or <?php echo anchor('ControladorUsuario/index', 'Cancelar'); ?>
+        </div>
 <?php echo form_close(); ?>

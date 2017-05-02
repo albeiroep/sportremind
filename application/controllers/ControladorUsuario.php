@@ -38,8 +38,8 @@ class ControladorUsuario extends CI_Controller
 		$this->form_validation->set_rules('deporte', 'deporte', 'required');
 		$this->form_validation->set_rules('correo', 'correo', 'required|valid_email|is_unique[usuario.correo]');
 		$this->form_validation->set_rules('nombre_usuario', 'nombre de usuario', 'required|is_unique[usuario.nombre_usuario]');
-		$this->form_validation->set_rules('contrasena', 'contraseña', 'required|min_length[8]|callback_is_password_strong');
-		$this->form_validation->set_rules('repetir_contrasena', 'repetir contraseña', 'required|matches[contrasena]');
+		$this->form_validation->set_rules('contraseña', 'contraseña', 'required|min_length[8]|callback_is_password_strong');
+		$this->form_validation->set_rules('repetir_contrasena', 'repetir contraseña', 'required|matches[contraseña]');
 
 		//Mensajes
             // %s es el nombre del campo que ha fallado
@@ -68,7 +68,7 @@ class ControladorUsuario extends CI_Controller
 			$data['deporte1']=$this->input->post('deporte');
 			$data['correo']=$this->input->post('correo');
 			$data['nombre_usuario']=$this->input->post('nombre_usuario');
-			$data['contraseña']=$this->input->post('contrasena');
+			$data['contraseña']=$this->input->post('contraseña');
 			$data['repetir_contraseña']=$this->input->post('repetir_contrasena');
 
 			$this->load->view('header');
@@ -76,10 +76,9 @@ class ControladorUsuario extends CI_Controller
 			$this->load->view('footer', $data);
 
 		}else{
-			$datos = array('nombre' => $this->input->post('nombre'), 'apellidos' => $this->input->post('apellidos'), 'ciudad' => $this->input->post('ciudad'), 'deporte' => $this->input->post('deporte'), 'correo' => $this->input->post('correo'), 'nombre_usuario' => $this->input->post('nombre_usuario'), 'contraseña' => $this->input->post('contrasena'));
-			
+
 			$this->load->model('Usuario');
-			$Usuario1=new Usuario($datos);
+			$Usuario1=new Usuario($this->input->post());
 			$Usuario1->validar();
 			$Usuario1->registrar();
 			
@@ -98,8 +97,8 @@ class ControladorUsuario extends CI_Controller
 	public function checklogin(){
 
 		
-		$this->form_validation->set_rules('username','Username','required');
-		$this->form_validation->set_rules('password','Password','required|callback_verifyUser');
+		$this->form_validation->set_rules('nombre_usuario','nombre de usuario','required');
+		$this->form_validation->set_rules('contraseña','contraseña','required|callback_verifyUser');
 
 		$this->form_validation->set_message('verifyUser', 'Nombre usuario o contraseña es incorrecto');
 		$this->form_validation->set_message('required','El campo %s es obligatorio'); 
@@ -122,7 +121,6 @@ class ControladorUsuario extends CI_Controller
 				'identificador' => $this->input->post('username'),
 				'conectado' => TRUE );
 
-			//$this->load->library('session');
 			$this->session->set_userdata($nuevos_datos);
 
 			$this->load->view('header');
@@ -132,12 +130,10 @@ class ControladorUsuario extends CI_Controller
 	}
 
 	public function verifyUser(){
-		$name= $this->input->post('username');
-		$pass= $this->input->post('password');
 
 		$this->load->model('Usuario');
-		$usuario1=new Usuario();
-		if($usuario1->login($name,$pass)){
+		$usuario1=new Usuario($this->input->post());
+		if($usuario1->login()){
 			return true;
 
 		}else{
@@ -157,7 +153,6 @@ class ControladorUsuario extends CI_Controller
 
 	public function vistaEliminar()
 	{
-		$this->load->model('Usuario');
 	
 		$this->load->view('header');
 		$this->load->view('eliminar_cuenta');
@@ -166,9 +161,7 @@ class ControladorUsuario extends CI_Controller
 
 	public function pregunta_eliminar()
 	{
-		$this->load->model('Usuario');
-
-
+		
 		if ($this->input->post('motivo') == '' ) {
 			
 			$this->load->view('header');
@@ -179,6 +172,8 @@ class ControladorUsuario extends CI_Controller
 		}else{
 
 			$mensaje = $this->input->post('motivo');
+			
+			$this->load->model('Usuario');
 			$this->Usuario->agregar_motivo($mensaje);
 
 			$this->load->view('header');
@@ -193,7 +188,6 @@ class ControladorUsuario extends CI_Controller
 		$this->load->model('Usuario');
 
 		$mensaje = $this->input->post('motivo');
-		//$this->load->library('session');
 		$this->Usuario->delete($this->session->userdata('identificador'));
 
 		session_destroy();
@@ -212,7 +206,6 @@ class ControladorUsuario extends CI_Controller
 	}
 
 	public function logoff(){
-		//$this->load->library('session');
 		session_destroy();
 
 		//Para cargar los nombres de los deportes en la lista desplegable
@@ -244,6 +237,7 @@ class ControladorUsuario extends CI_Controller
 			$this->load->view('ValidarCorreo');
 			$this->load->view('footer');
 		} else {
+			
 			$email = $this->input->post('email');
 			$this->db->where('correo', $email);
 			$this->db->from('usuario');
@@ -257,7 +251,7 @@ class ControladorUsuario extends CI_Controller
 				);
 				
 				$this->db->where('correo', $email);
-				//if ($this->db->update('usuario', $data)) {
+
 				$this->load->model('Usuario');
 				if ($this->Usuario->actualizar_Usuario($data)) {
 					// Email enviado
@@ -333,7 +327,7 @@ class ControladorUsuario extends CI_Controller
 				);
 				
 				if ($this->Usuario->update_user($data, $email)) {
-					echo "<script language=\"javascript\">alert('Correo incorrect. Inténtelo de nuevo');</script>";
+					echo "<script language=\"javascript\">alert('Correo incorrecto. Inténtelo de nuevo');</script>";
 					
 				} else
 				{

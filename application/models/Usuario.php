@@ -106,11 +106,11 @@ class Usuario extends CI_Model {
 		return $this->db->insert('usuario', $data);
 	}
 
-	public function login($name,$pass){
+	public function login(){
 		$this->db->select('nombre_usuario,contraseña');
 		$this->db->from('usuario');
-		$this->db->where('nombre_usuario',$name);
-		$this->db->where('contraseña',$pass);
+		$this->db->where('nombre_usuario',$this->nombre_usuario);
+		$this->db->where('contraseña',$this->contraseña);
 
 		$query=$this->db->get();
 

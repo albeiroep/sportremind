@@ -58,7 +58,7 @@
         );
 
     $cont = array(
-          'name'        => 'contrasena',
+          'name'        => 'contraseña',
           'value'       => $contraseña,
           'placeholder' =>'Contraseña',
           'class'       => 'form-control',
@@ -79,55 +79,53 @@
       <?php echo form_open('ControladorUsuario/checklogin'); ?> 
       <?php echo validation_errors(); ?>
 
-        <div class="form_group">
-          <?= form_label('Nombre de Usuario','','class="form-control"',['id'=>'username']); ?>
+        <div class="form-group">
+          <?= form_label('Nombre de Usuario','','class="form-control"',['id'=>'nombre_usuario']); ?>
           <br>
-          <?= form_input('username','','class="form-control"',['id'=>'username']); ?>
+          <?= form_input('nombre_usuario','','class="form-control"',['id'=>'nombre_usuario']); ?>
         </div>
 
         <div class="form_group">
           <?= form_label('Contraseña','', 'class="form-control"'); ?>
           <br>
-          <?= form_password('password','', 'class="form-control"'); ?>
+          <?= form_password('contraseña','', 'class="form-control"'); ?>
         </div>
         <br>
-		<?php echo anchor('ControladorUsuario/ValidarCorreo', '¿Olvidó contraseña?'); ?>
+		    <?php echo anchor('ControladorUsuario/ValidarCorreo', '¿Olvidó su contraseña?'); ?>
 		
         <?= form_submit('sbm', 'Entrar', 'class="btn btn-primary"'); ?>
       <?= form_close(); ?>
     </div>
+
     <div class="col-md-7">
       <p><h1>Registrarse</h1></p>
       <?= form_open('ControladorUsuario/crear'); ?>
-      <table border="0">
-       <tr>
+        <?php echo validation_errors(); ?>
+        <table border="0">
+         <tr>
 
-        <td><?= form_input($nom, ['id'=>'nombre']); ?></td>
-        <td><?= form_input($ape, ['id'=>'apellidos']); ?></td>
-      </tr>
-      <tr>
-        <td><?= form_input($ciu, ['id'=>'ciudad']); ?></td>
-        <td><?= form_dropdown('deporte', $deporte, $deporte1, 'class="form-control"', ['id'=>'deporte']) ?>	</td>
-      </tr>
-      <tr>
-        <td><?= form_input($cor, ['id'=>'correo']); ?></td>
-        <td><?= form_input($nomU,['id'=>'nombre_usuario']); ?></td>
-      </tr>
-      <tr>
-        <td><?= form_password($cont, ['id'=>'contrasena']); ?></td>
-        <td><?= form_password($rcont, ['id'=>'repetir_contrasena']); ?></td>
-      </tr>
-    </table>
-    <br>
+          <td><?= form_input($nom, ['id'=>'nombre']); ?></td>
+          <td><?= form_input($ape, ['id'=>'apellidos']); ?></td>
+        </tr>
+        <tr>
+          <td><?= form_input($ciu, ['id'=>'ciudad']); ?></td>
+          <td><?= form_dropdown('deporte', $deporte, $deporte1, 'class="form-control"', ['id'=>'deporte']) ?>	</td>
+        </tr>
+        <tr>
+          <td><?= form_input($cor, ['id'=>'correo']); ?></td>
+          <td><?= form_input($nomU,['id'=>'nombre_usuario']); ?></td>
+        </tr>
+        <tr>
+          <td><?= form_password($cont, ['id'=>'contraseña']); ?></td>
+          <td><?= form_password($rcont, ['id'=>'repetir_contrasena']); ?></td>
+        </tr>
+      </table>
+      <br>
 
-    <p class="help-block">* Indica los campos del formulario que son obligatorios</p>
-    <p class="help-block"> La contraseña debe tener por lo menos 1 letra en mayúscula, <br> 1 en minúscula, 1 digito y 1 caracter especial y tener una longitud mayor o igual a 7</p>
+      <p class="help-block">* Indica los campos del formulario que son obligatorios</p>
+      <p class="help-block"> La contraseña debe tener por lo menos 1 letra en mayúscula, <br> 1 en minúscula, 1 digito y 1 caracter especial y tener una longitud mayor o igual a 7</p>
 
-    <?= form_submit('sbm', 'Crear', 'class="btn btn-primary"'); ?>
-    
-    <?php if (validation_errors()):
-    echo validation_errors();
-    endif; ?>
+      <?= form_submit('sbm', 'Crear', 'class="btn btn-primary"'); ?>
 
     <?= form_close(); ?>
     <br>
@@ -139,6 +137,7 @@
     echo $mensaje;
     endif;
     ?>
+    
   </div>
   </div>
 </div> 
