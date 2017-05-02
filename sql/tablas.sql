@@ -23,3 +23,16 @@ CREATE TABLE deporte (
 INSERT INTO deporte VALUES ('Ciclismo', 'Individual');
 INSERT INTO deporte VALUES ('Atletismo', 'Individual');
 INSERT INTO deporte VALUES ('Natación', 'Acuático');
+
+CREATE TABLE entrenamiento (
+	id               	INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	id_usuario 		 	INT(2) 		NOT NULL,
+	nombre           	VARCHAR(20) NOT NULL,
+	duracion     		INT(10)  	NOT NULL,
+	calorias_perdidas   INT(5)  	NOT NULL,
+	lugar				INT(5) 		NOT NULL,
+	imagen 				VARCHAR(20),
+	PRIMARY KEY (id),
+	CONSTRAINT id_usuario FOREIGN KEY (id_usuario) REFERENCES usuario (id)
+	ON DELETE CASCADE ON UPDATE CASCADE,
+) ENGINE = InnoDB;

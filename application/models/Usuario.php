@@ -13,8 +13,7 @@ class Usuario extends CI_Model {
 
 	public function __construct($value = null) {
 		parent::__construct();
-		$this->load->database();
-
+		
 		if ($value != null) {
 			if (is_array($value))
 				settype($value, 'object');
