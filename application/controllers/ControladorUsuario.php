@@ -10,10 +10,11 @@ class ControladorUsuario extends CI_Controller
 	public function index()
 	{
 
-		//$this->load->library('session');
-
 		if ($this->session->userdata('conectado') == TRUE ){
+
+			$this->load->view('header');
 			$this->load->view('inicio');
+			$this->load->view('footer');
 
 		}else{
 
@@ -48,10 +49,6 @@ class ControladorUsuario extends CI_Controller
 		$this->form_validation->set_message('matches','El campo %s debe ser igual al campo repetir contraseña');
 		$this->form_validation->set_message('is_unique','El %s ingresado ya lo tiene otro usuario');
 		$this->form_validation->set_message('callback_is_password_strong','La %s no tiene la complejidad requerida');
-
-		//Se carga la librería y se encripta la contraseña
-		//$this->load->library('encrypt');
-		//$contraseña = $this->encrypt->encode($this->input->post('contrasena'));
 
 		//Si los datos ingresados en el formulario no son correctos se regresa  a la vista sin guardar los datos en la bd.
 
@@ -116,16 +113,13 @@ class ControladorUsuario extends CI_Controller
 
 		}else{
 			$nuevos_datos = array(
-				'username' => $this->input->post('username'),
-				'password' => $this->input->post('password'),
-				'identificador' => $this->input->post('username'),
+				'nombre_usuario' => $this->input->post('nombre_usuario'),
+				'contraseña' => $this->input->post('contraseña'),
+				'identificador' => $this->input->post('nombre_usuario'),
 				'conectado' => TRUE );
 
 			$this->session->set_userdata($nuevos_datos);
-
-			$this->load->view('header');
-			$this->load->view('inicio');
-			$this->load->view('footer');
+			$this->index();
 		}
 	}
 
@@ -149,6 +143,14 @@ class ControladorUsuario extends CI_Controller
      	return TRUE;
    	}
    	return FALSE;
+	}
+
+	public function perfil()
+	{
+		$data['nom_usuario']= $this->session->userdata('nombre_usuario');
+		$this->load->view('header');
+		$this->load->view('perfil', $data);
+		$this->load->view('footer');
 	}
 
 	public function vistaEliminar()
@@ -224,6 +226,12 @@ class ControladorUsuario extends CI_Controller
 		$this->load->view('inicio');
 		$this->load->view('footer');
 
+	}
+
+	public function consultar_id(){
+		$this->load->model('Usuario');
+		$usuario1=new Usuario();
+		return $usuario1->consultar_id($this->session->set_userdata($nombre_usuario));
 	}
 	
 	public function validarCorreo() {

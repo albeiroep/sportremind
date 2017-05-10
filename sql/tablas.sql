@@ -26,13 +26,14 @@ INSERT INTO deporte VALUES ('Natación', 'Acuático');
 
 CREATE TABLE entrenamiento (
 	id               	INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	id_usuario 		 	INT(2) 		NOT NULL,
+	id_usuario 		 	INT UNSIGNED NOT NULL,
 	nombre           	VARCHAR(20) NOT NULL,
 	duracion     		INT(10)  	NOT NULL,
 	calorias_perdidas   INT(5)  	NOT NULL,
-	lugar				INT(5) 		NOT NULL,
+	fecha				Date 		NOT NULL,
+	lugar				VARCHAR(50) NOT NULL,
 	imagen 				VARCHAR(20),
 	PRIMARY KEY (id),
 	CONSTRAINT id_usuario FOREIGN KEY (id_usuario) REFERENCES usuario (id)
-	ON DELETE CASCADE ON UPDATE CASCADE,
+	ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;

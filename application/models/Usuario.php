@@ -44,14 +44,6 @@ class Usuario extends CI_Model {
 				return parent::__get($key);
 		}
 	}
-
-	public function actualizar_Usuario($data){
-		if($this->db->update('usuario', $data)) {
-			return TRUE;
-		} else {
-			return FALSE;
-		}
-	}
 	
 	public function validar() {
 		$errores = [];
@@ -117,6 +109,22 @@ class Usuario extends CI_Model {
 			return true;
 		}else{
 			return false;
+		}
+	}
+
+	public function consultar_id()
+	{
+		$this->db->select('id');
+		$query = $this->db->get_where('usuario', ['nombre_usuario' => $_GET['itemid']]);
+
+		return $query->result();
+	}
+
+	public function actualizar_Usuario($data){
+		if($this->db->update('usuario', $data)) {
+			return TRUE;
+		} else {
+			return FALSE;
 		}
 	}
 	

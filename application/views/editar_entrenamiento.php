@@ -1,58 +1,64 @@
 <?php
 
-  $nombre=(isset($nombre)) ? $nombre=$nombre : $nombre='';
+foreach ($datos as $dato) {
 
-  $duracion=(isset($duracion)) ? $duracion=$duracion : $duracion='';
-
-  $calorias_perdidas=(isset($calorias_perdidas)) ? $calorias_perdidas=$calorias_perdidas : $calorias_perdidas='';
-
-  $lugar=(isset($lugar)) ? $lugar=$lugar : $lugar='';
-
-  $imagen=(isset($imagen)) ? $imagen=$imagen : $imagen='';  
+  $id_usuario = $dato->id_usuario;
 
   $nom = array(
           'name'        => 'nombre',
-          'value'       => $nombre,
+          'value'       => $dato->nombre,
           'placeholder' =>'Nombre del entrenamiento',
           'class'       => 'form-control',
         );
 
   $dur = array(
           'name'        => 'duracion',
-          'value'       => $duracion,
+          'value'       => $dato->duracion,
           'placeholder' =>'Duración en minutos',
           'class'       => 'form-control',
         );
 
   $cal = array(
           'name'        => 'calorias_perdidas',
-          'value'       => $calorias_perdidas,
+          'value'       => $dato->calorias_perdidas,
           'placeholder' =>'Calorías pérdidas',
           'class'       => 'form-control',
         );
 
   $lug = array(
           'name'        => 'lugar',
-          'value'       => $lugar,
+          'value'       => $dato->lugar,
           'placeholder' =>'Lugar',
           'class'       => 'form-control',
         );
 
   $img = array(
           'name'        => 'imagen',
-          'value'       => $imagen,
+          'value'       => $dato->imagen,
           'placeholder' =>'Imagen',
           'class'       => 'form-control',
         );
+
+  $fec = array(
+          'name'        => 'fecha',
+          'value'       => $dato->fecha,
+          'placeholder' =>'Fecha',
+          'class'       => 'form-control',
+        );
+}
+
+$id=$_GET['itemid'];
+
 ?>
 
 <div class='container'>
   <div class="row"> 
     <div class="col-md-5 col-md-offset-3">
       <p><h1>Editar Entrenamiento</h1></p>
-      <?php echo form_open('Controlador_ entrenamiento/editar'); ?> 
+      <?php echo form_open("/Controlador_entrenamiento/editar?itemid=$id"); ?> 
       <?php echo validation_errors(); ?>
-
+          <td><?= form_hidden('id_usuario', $id_usuario, ['id'=>'id_usuario']); ?></td>
+          <br>
           <td><?= form_input($nom, ['id'=>'nombre']); ?></td>
           <br>
           <td><?= form_input($dur, ['id'=>'duracion']); ?></td>
@@ -61,6 +67,8 @@
           <br>
           <td><?= form_input($lug, ['id'=>'lugar']); ?></td>
           <br>
+          <td><?= form_input($fec, ['id'=>'fecha']); ?></td>
+          <br>
           <td><?= form_input($img, ['id'=>'imagen']); ?></td>
 		      <br>
         <?= form_submit('sbm', 'Editar', 'class="btn btn-primary"'); ?>
@@ -68,6 +76,7 @@
     </div>
 
     <br>
+
     <?php if(isset($entrenamiento)):
     echo $entrenamiento;
     endif;

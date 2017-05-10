@@ -8,6 +8,8 @@
 
   $lugar=(isset($lugar)) ? $lugar=$lugar : $lugar='';
 
+  $fecha=(isset($fecha)) ? $fecha=$fecha : $fecha='';
+
   $imagen=(isset($imagen)) ? $imagen=$imagen : $imagen='';  
 
   $nom = array(
@@ -31,6 +33,13 @@
           'class'       => 'form-control',
         );
 
+  $fec = array(
+          'name'        => 'fecha',
+          'value'       => $fecha,
+          'placeholder' =>'Fecha',
+          'class'       => 'form-control',
+        );
+
   $lug = array(
           'name'        => 'lugar',
           'value'       => $lugar,
@@ -44,13 +53,15 @@
           'placeholder' =>'Imagen',
           'class'       => 'form-control',
         );
+
+  $id_usuario=$_GET['itemid'];
 ?>
 
 <div class='container'>
   <div class="row"> 
     <div class="col-md-5 col-md-offset-3">
       <p><h1>Publicar Entrenamiento</h1></p>
-      <?php echo form_open('Controlador_ entrenamiento/publicar'); ?> 
+      <?php echo form_open("/Controlador_entrenamiento/publicar_entrenamiento?itemid=$id_usuario"); ?> 
       <?php echo validation_errors(); ?>
 
           <td><?= form_input($nom, ['id'=>'nombre']); ?></td>
@@ -59,11 +70,13 @@
           <br>
           <td><?= form_input($cal, ['id'=>'calorias_perdidas']); ?></td>
           <br>
+          <td><?= form_input($fec, ['id'=>'fecha']); ?></td>
+          <br>
           <td><?= form_input($lug, ['id'=>'lugar']); ?></td>
           <br>
           <td><?= form_input($img, ['id'=>'imagen']); ?></td>
 		      <br>
-        <?= form_submit('sbm', 'Publicar', 'class="btn btn-primary"'); ?>
+        <input type="submit" value="Publicar" class="btn btn-primary" /></a>
       <?= form_close(); ?>
     </div>
 

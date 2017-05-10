@@ -1,3 +1,5 @@
+<br>
+<br>
 <?php
   $deporte[]='Deporte';
   foreach ($datos as $dato) {
@@ -133,6 +135,7 @@
     echo $usuario;
     endif;
     ?>
+    
     <?php if(isset($mensaje)):
     echo $mensaje;
     endif;

@@ -12,8 +12,6 @@
 			<h1>Sport Remind</h1>
 		</div>
 	</header>
-	<br>
-	<br>
 	
 	
 
