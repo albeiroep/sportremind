@@ -123,6 +123,14 @@ class Usuario extends CI_Model {
 		return $query->result();
 	}
 
+	public function consultar_tipo_usuario($nombre_usuario)
+	{
+		$this->db->select('tipo_usuario');
+		$query = $this->db->get_where('usuario', ['nombre_usuario' => $nombre_usuario]);
+
+		return $query->result();
+	}
+
 	public function actualizar_Usuario($data){
 		if($this->db->update('usuario', $data)) {
 			return TRUE;

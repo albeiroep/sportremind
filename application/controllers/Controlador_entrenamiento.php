@@ -8,15 +8,6 @@ class Controlador_entrenamiento extends CI_Controller
 
 	private $id;
 
-	public function index()
-	{
-
-			$this->load->view('header');
-			$this->load->view('publicar_entrenamiento');
-			$this->load->view('footer');
-
-	}
-
 	public function publicar_entrenamiento(){
 
 		//Validación de datos ingresados en el formulario

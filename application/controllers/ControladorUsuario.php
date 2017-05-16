@@ -12,9 +12,20 @@ class ControladorUsuario extends CI_Controller
 
 		if ($this->session->userdata('conectado') == TRUE ){
 
-			$this->load->view('header');
-			$this->load->view('inicio');
-			$this->load->view('footer');
+			$this->load->model('Usuario');
+			$Usuario1=new Usuario();
+			$tipo=$Usuario1->consultar_tipo_usuario($this->session->userdata('nom_usuario'));
+
+			if($tipo='Administrador'){
+				$this->load->view('header');
+				$this->load->view('inicio_admin');
+				$this->load->view('footer');
+			}else{
+
+				$this->load->view('header');
+				$this->load->view('inicio');
+				$this->load->view('footer');
+			}
 
 		}else{
 
