@@ -32,7 +32,7 @@ CREATE TABLE entrenamiento (
 	calorias_perdidas   INT(5)  	NOT NULL,
 	fecha				Date 		NOT NULL,
 	lugar				VARCHAR(50) NOT NULL,
-	imagen 				VARCHAR(20),
+	imagen 				LONGBLOB,
 	PRIMARY KEY (id),
 	CONSTRAINT id_usuario FOREIGN KEY (id_usuario) REFERENCES usuario (id)
 	ON DELETE CASCADE ON UPDATE CASCADE

@@ -1,4 +1,4 @@
-<div class="">
+<div>
 	<header>
 		<nav class="navbar navbar-default navbar-static-top" > <!-- o inverse-->
 			<div class="container-fluid">

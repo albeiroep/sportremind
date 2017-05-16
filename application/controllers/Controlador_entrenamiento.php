@@ -24,12 +24,15 @@ class Controlador_entrenamiento extends CI_Controller
 		$this->form_validation->set_rules('nombre', 'nombre', 'required');
 		$this->form_validation->set_rules('duracion', 'duración', 'required');
 		$this->form_validation->set_rules('calorias_perdidas', 'calorías pérdidas', 'required');
-		$this->form_validation->set_rules('fecha', 'fecha', 'required');
+		$this->form_validation->set_rules('fecha', 'fecha', 'required|callback_validar_fecha');
 		$this->form_validation->set_rules('lugar', 'lugar', 'required');
+		//$this->form_validation->set_rules('imagen', 'imagen', 'callback_validar_archivo');
 
 		//Mensajes
             // %s es el nombre del campo que ha fallado
-		$this->form_validation->set_message('required','El campo %s es obligatorio'); 
+		$this->form_validation->set_message('required','El campo %s es obligatorio');
+		$this->form_validation->set_message('validar_fecha','El campo %s no es correcto, por favor ingrésalo nuevamente');
+		//$this->form_validation->set_message('validar_archivo','El archivo no es del tipo requerido, por favor ingrese una imagen correcta'); 
 
 		//Si los datos ingresados en el formulario no son correctos se regresa  a la vista sin guardar los datos en la bd.
 
@@ -54,11 +57,10 @@ class Controlador_entrenamiento extends CI_Controller
 
 			$this->load->model('Entrenamiento');
 			$Entrenamiento1=new Entrenamiento($this->input->post());
-			$Entrenamiento1->validar();
 			if($Entrenamiento1->registrar($id_usuario)){
-				$data['entrenamiento']="El entrenamiento fue registrado satisfactoriamente";
+				$data['entrenamiento']="el entrenamiento ha sido publicado exitosamente";
 			}else{
-				$data['entrenamiento']="El entrenamiento no pudo ser registrado";
+				$data['entrenamiento']="El entrenamiento no pudo ser publicado";
 			}
 
 			$this->load->model('Entrenamiento');
@@ -80,6 +82,7 @@ class Controlador_entrenamiento extends CI_Controller
 
 		foreach ($id as $ids) {
 			$identificacion=$ids->id; 
+			$data['id_usuario']=$ids->id; 
 		}
 
 		$this->load->model('Entrenamiento');
@@ -132,7 +135,6 @@ class Controlador_entrenamiento extends CI_Controller
 
 			$this->load->model('Entrenamiento');
 			$Entrenamiento1=new Entrenamiento($this->input->post());
-			$Entrenamiento1->validar();
 			if($Entrenamiento1->actualizar($id_entrenamiento)){
 				$data['entrenamiento']="El entrenamiento fue actualizado satisfactoriamente";
 			}else{
@@ -153,13 +155,48 @@ class Controlador_entrenamiento extends CI_Controller
 	{
 		$this->load->model('Entrenamiento');
 		$Entrenamiento1=new Entrenamiento();
-		$Entrenamiento1->eliminar();
+		if($Entrenamiento1->eliminar()){
+			$data['entrenamiento']="El entrenamiento fue eliminado satisfactoriamente";
+		}else{
+			$data['entrenamiento']="El entrenamiento no pudo ser eliminado";
+		}
 		
 		$this->load->model('Entrenamiento');
 			$data['datos']=$this->Entrenamiento->consultar_entrenamientos_por_usuario($_GET['id_usuario']);
 		$this->load->view('header');
 		$this->load->view('consultar_entrenamiento', $data);
 		$this->load->view('footer');
+	}
+
+	public function validar_archivo($imagen)
+	{
+		//$mi_imagen = 'mi_archivo';
+        $config['upload_path'] = APPPATH."./uploads/";
+        $config['file_name'] = "nombre_archivo";
+        $config['allowed_types'] = "gif|jpg|jpeg|png";
+        $config['max_size'] = "50000";
+        $config['max_width'] = "2000";
+        $config['max_height'] = "2000";
+
+	$this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload($imagen)) {
+            //*** ocurrio un error
+            $data['uploadError'] = $this->upload->display_errors();
+            echo $this->upload->display_errors();
+            return;
+        }
+
+        $data['uploadSuccess'] = $this->upload->data();
+	}
+
+	public function validar_fecha($fecha)
+	{
+		$formato = 'Y/m/d';
+    	$d = DateTime::createFromFormat($formato, $fecha);
+    	$data=$d && $d->format($formato) == $fecha;
+
+    	return $data;
 	}
 }
 

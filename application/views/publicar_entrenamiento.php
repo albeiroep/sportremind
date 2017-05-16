@@ -1,3 +1,5 @@
+<br>
+<br>
 <?php
 
   $nombre=(isset($nombre)) ? $nombre=$nombre : $nombre='';
@@ -15,43 +17,41 @@
   $nom = array(
           'name'        => 'nombre',
           'value'       => $nombre,
-          'placeholder' =>'Nombre del entrenamiento',
+          'placeholder' =>'Nombre del entrenamiento*',
           'class'       => 'form-control',
         );
 
   $dur = array(
           'name'        => 'duracion',
           'value'       => $duracion,
-          'placeholder' =>'Duración en minutos',
+          'placeholder' =>'Duración en minutos*',
           'class'       => 'form-control',
         );
 
   $cal = array(
           'name'        => 'calorias_perdidas',
           'value'       => $calorias_perdidas,
-          'placeholder' =>'Calorías pérdidas',
+          'placeholder' =>'Calorías pérdidas*',
           'class'       => 'form-control',
         );
 
   $fec = array(
           'name'        => 'fecha',
           'value'       => $fecha,
-          'placeholder' =>'Fecha',
-          'class'       => 'form-control',
+          'placeholder' =>'Fecha (yyyy/mm/dd)*',
+          'class'       => 'datepicker',
         );
 
   $lug = array(
           'name'        => 'lugar',
           'value'       => $lugar,
-          'placeholder' =>'Lugar',
+          'placeholder' =>'Lugar*',
           'class'       => 'form-control',
         );
 
   $img = array(
           'name'        => 'imagen',
           'value'       => $imagen,
-          'placeholder' =>'Imagen',
-          'class'       => 'form-control',
         );
 
   $id_usuario=$_GET['itemid'];
@@ -61,7 +61,7 @@
   <div class="row"> 
     <div class="col-md-5 col-md-offset-3">
       <p><h1>Publicar Entrenamiento</h1></p>
-      <?php echo form_open("/Controlador_entrenamiento/publicar_entrenamiento?itemid=$id_usuario"); ?> 
+      <?php echo form_open_multipart("/Controlador_entrenamiento/publicar_entrenamiento?itemid=$id_usuario"); ?> 
       <?php echo validation_errors(); ?>
 
           <td><?= form_input($nom, ['id'=>'nombre']); ?></td>
@@ -72,22 +72,27 @@
           <br>
           <td><?= form_input($fec, ['id'=>'fecha']); ?></td>
           <br>
+          <br>
           <td><?= form_input($lug, ['id'=>'lugar']); ?></td>
           <br>
-          <td><?= form_input($img, ['id'=>'imagen']); ?></td>
+          <td><?= form_label('Imagen (.jpg, .png o .gif)'); ?></td>
+          <td><?= form_upload($img, ['id'=>'imagen']); ?></td>
 		      <br>
-        <input type="submit" value="Publicar" class="btn btn-primary" /></a>
+          <input type="submit" value="Publicar" class="btn btn-primary" /></a>
+          <br>
+          <p class="help-block">* Indica los campos del formulario que son obligatorios</p>
       <?= form_close(); ?>
-    </div>
 
+    </div>
     <br>
+
     <?php if(isset($entrenamiento)):
-    echo $entrenamiento;
-    endif;
+      echo $entrenamiento;
+      endif;
     ?>
     <?php if(isset($mensaje)):
-    echo $mensaje;
-    endif;
+      echo $mensaje;
+      endif;
     ?>
     
   </div>

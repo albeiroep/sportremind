@@ -48,7 +48,7 @@ class ControladorUsuario extends CI_Controller
 		$this->form_validation->set_message('valid_email','El campo %s debe ser un correo valido'); 
 		$this->form_validation->set_message('matches','El campo %s debe ser igual al campo repetir contraseña');
 		$this->form_validation->set_message('is_unique','El %s ingresado ya lo tiene otro usuario');
-		$this->form_validation->set_message('callback_is_password_strong','La %s no tiene la complejidad requerida');
+		$this->form_validation->set_message('is_password_strong','La %s no tiene la complejidad requerida');
 
 		//Si los datos ingresados en el formulario no son correctos se regresa  a la vista sin guardar los datos en la bd.
 

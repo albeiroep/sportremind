@@ -1,7 +1,7 @@
 <br>
 <br>
 <?php
-  $deporte[]='Deporte';
+  $deporte[]='Deporte*';
   foreach ($datos as $dato) {
     $deporte[$dato->nombre]=$dato->nombre;
   }
@@ -27,49 +27,49 @@
   $nom = array(
           'name'        => 'nombre',
           'value'       => $nombre,
-          'placeholder' =>'Nombre',
+          'placeholder' =>'Nombre*',
           'class'       => 'form-control',
         );
 
   $ape = array(
           'name'        => 'apellidos',
           'value'       => $apellidos,
-          'placeholder' =>'Apellidos',
+          'placeholder' =>'Apellidos*',
           'class'       => 'form-control',
         );
 
   $ciu = array(
           'name'        => 'ciudad',
           'value'       => $ciudad,
-          'placeholder' =>'Ciudad',
+          'placeholder' =>'Ciudad*',
           'class'       => 'form-control',
         );
 
   $cor = array(
           'name'        => 'correo',
           'value'       => $correo,
-          'placeholder' =>'Correo electrónico',
+          'placeholder' =>'Correo electrónico*',
           'class'       => 'form-control',
         );
 
     $nomU = array(
           'name'        => 'nombre_usuario',
           'value'       => $nombre_usuario,
-          'placeholder' =>'Nombre de Usuario',
+          'placeholder' =>'Nombre de Usuario*',
           'class'       => 'form-control',
         );
 
     $cont = array(
           'name'        => 'contraseña',
           'value'       => $contraseña,
-          'placeholder' =>'Contraseña',
+          'placeholder' =>'Contraseña*',
           'class'       => 'form-control',
         );
 
     $rcont = array(
           'name'        => 'repetir_contrasena',
           'value'       => $repetir_contraseña,
-          'placeholder' =>'Repetir Contraseña',
+          'placeholder' =>'Repetir Contraseña*',
           'class'       => 'form-control',
         );
 ?>
@@ -82,13 +82,13 @@
       <?php echo validation_errors(); ?>
 
         <div class="form-group">
-          <?= form_label('Nombre de Usuario','','class="form-control"',['id'=>'nombre_usuario']); ?>
+          <?= form_label('Nombre de Usuario*:','','class="form-control"',['id'=>'nombre_usuario']); ?>
           <br>
           <?= form_input('nombre_usuario','','class="form-control"',['id'=>'nombre_usuario']); ?>
         </div>
 
         <div class="form_group">
-          <?= form_label('Contraseña','', 'class="form-control"'); ?>
+          <?= form_label('Contraseña*:','', 'class="form-control"'); ?>
           <br>
           <?= form_password('contraseña','', 'class="form-control"'); ?>
         </div>

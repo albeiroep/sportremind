@@ -108,7 +108,8 @@ class Entrenamiento extends CI_Model {
 		$id= $_GET["itemid"];
 		$this->db->where('id', $id);
 		$this->db->delete('entrenamiento');
-		$this->db->get('entrenamiento');
+		$query= $this->db->get('entrenamiento');
+		return $query->result();
 	}
 	
 	public function actualizar($id) {
