@@ -9,7 +9,8 @@ class Usuario extends CI_Model {
 	private $ciudad;
 	private $nombre_usuario;
 	private $correo;
-	private $contraseña;	
+	private $contraseña;
+	private $tipo_usuario;	
 
 	public function __construct($value = null) {
 		parent::__construct();
@@ -26,6 +27,7 @@ class Usuario extends CI_Model {
 				$this->nombre_usuario = isset($value->nombre_usuario)? $value->nombre_usuario : null;
 				$this->correo = isset($value->correo)? $value->correo : null;
 				$this->contraseña = isset($value->contraseña)? $value->contraseña : null;
+				$this->tipo_usuario='Deportista';
 			}
 		}
 	}
@@ -92,6 +94,7 @@ class Usuario extends CI_Model {
 			'correo' => $this->correo,
 			'nombre_usuario' => $this->nombre_usuario,
 			'contraseña' => $this->contraseña,
+			'tipo_usuario' => $this->tipo_usuario,
 		];
 
 		return $this->db->insert('usuario', $data);

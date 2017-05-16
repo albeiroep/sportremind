@@ -8,9 +8,13 @@ CREATE TABLE usuario (
 	nombre_usuario   	VARCHAR(50)  NOT NULL,
 	contraseña       	VARCHAR(50)  NOT NULL,
 	olvidoContrasenia	INT(11),
-	PRIMARY KEY (id)
+	tipo_usuario		VARCHAR(20)	 NOT NULL,
+	PRIMARY KEY (id),
+	CONSTRAINT tipo_usuario_valido CHECK (tipo_usuario IN ('Administrador', 'Deportista'))
 
 ) ENGINE = InnoDB;
+
+INSERT INTO usuario VALUES ('1', 'administrador', 'sportremind' , 'Ciclismo', 'Medellin', 'admin@sportremind.com', 'admin', 'admin123', '', 'Administrador');
 
 CREATE TABLE deporte (
 	nombre           	VARCHAR(30)  NOT NULL,
