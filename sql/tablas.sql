@@ -1,4 +1,4 @@
-CREATE TABLE usuario (
+﻿CREATE TABLE usuario (
 	id               	INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	nombre           	VARCHAR(30)  NOT NULL,
 	apellidos        	VARCHAR(40)  NOT NULL,
@@ -41,3 +41,14 @@ CREATE TABLE entrenamiento (
 	CONSTRAINT id_usuario FOREIGN KEY (id_usuario) REFERENCES usuario (id)
 	ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
+
+CREATE TABLE eventodeportivo (
+	nombre_evento  VARCHAR(50)   NOT NULL,
+	temperatura_esperada VARCHAR (20)  NOT NULL,
+	lugar VARCHAR (20)  NOT NULL,
+	fecha DATE NOT NULL,
+	direccion_url  VARCHAR(50)   NOT NULL,
+	categoria VARCHAR(50)   NULL
+) ENGINE = InnoDB;
+
+
