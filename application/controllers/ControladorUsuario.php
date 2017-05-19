@@ -14,9 +14,13 @@ class ControladorUsuario extends CI_Controller
 
 			$this->load->model('Usuario');
 			$Usuario1=new Usuario();
-			$tipo=$Usuario1->consultar_tipo_usuario($this->session->userdata('nom_usuario'));
+			$tipo_u=$Usuario1->consultar_tipo_usuario($this->session->userdata('nombre_usuario'));
 
-			if($tipo='Administrador'){
+			foreach ($tipo_u as $tipos) {
+				$tipo=$tipos->tipo_usuario; 
+			}
+
+			if ($tipo=='Administrador') {
 				$this->load->view('header');
 				$this->load->view('inicio_admin');
 				$this->load->view('footer');
