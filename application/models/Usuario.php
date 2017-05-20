@@ -47,6 +47,28 @@ class Usuario extends CI_Model {
 		}
 	}
 	
+	public function traer_usuarios($nom_Usuario){
+
+		$this->db->select('nombre_usuario,,nombre, apellidos,id');
+		$this->db->from('usuario');
+		$this->db->where('nombre_usuario',$nom_Usuario);
+
+		$query=$this->db->get();
+
+		return $query->result();
+	}
+
+		public function datos_usuario($id){
+
+		$this->db->select('nombre_usuario');
+		$this->db->from('usuario');
+		$this->db->where('id',$id);
+
+		$query=$this->db->get();
+
+		return $query->result();
+	}
+
 	public function validar() {
 		$errores = [];
 

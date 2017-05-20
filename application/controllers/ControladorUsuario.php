@@ -40,6 +40,32 @@ class ControladorUsuario extends CI_Controller
 		}
 	}
 
+	public function provicional(){
+		$this->load->view('inicioPrueba');
+	}
+
+	public function cargar_usuarios(){
+		$msg="";
+		$this->load->model('Usuario');
+		$nom_usu=$this->input->post('nom');
+
+		if (empty($nom_usu)) {
+			$this->load->view('inicioPrueba');
+		} else {
+			if (empty($this->Usuario->traer_usuarios($nom_usu))) {
+				$msg="no existe deportista buscado";	
+			}
+
+			$data['msg']=$msg;
+			$data['usuarios']=$this->Usuario->traer_usuarios($nom_usu);
+			$this->load->view('BusquedaUsuario',$data);
+			
+		}
+
+		
+	
+	}
+
 	public function crear(){
 
 		//Validación de datos ingresados en el formulario
@@ -161,6 +187,16 @@ class ControladorUsuario extends CI_Controller
 		$data['nom_usuario']= $this->session->userdata('nombre_usuario');
 		$this->load->view('header');
 		$this->load->view('perfil', $data);
+		$this->load->view('footer');
+	}
+
+	public function ver_perfil($id)
+	{
+		$this->load->model('Usuario');
+		$data['usuarios']=$this->Usuario->datos_usuario($id);
+
+		$this->load->view('header');
+		$this->load->view('perfil_visitado', $data);
 		$this->load->view('footer');
 	}
 
