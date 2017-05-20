@@ -351,10 +351,12 @@ class ControladorUsuario extends CI_Controller
 	public function ValidarContrasenia() {
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('email', 'Email', 'required|valid_email|min_length[5]|max_length[125]');
-		$this->form_validation->set_rules('password1', 'Contraseña', 'required|min_length[8]|callback_is_password_strong');
-		$this->form_validation->set_rules('password2', 'Confirmar Contraseña', 'required|min_length[8]|callback_is_password_strong');
+		$this->form_validation->set_rules('password1', 'primera contraseña', 'required|min_length[8]|callback_is_password_strong');
+		$this->form_validation->set_rules('password2', 'confirmación de contraseña', 'required|min_length[8]|matches[password1]|callback_is_password_strong');
 		
-		$this->form_validation->set_message('callback_is_password_strong','La contraseña no tiene la complejidad requerida');
+		
+		$this->form_validation->set_message('is_password_strong','La %s no tiene la complejidad requerida');
+		$this->form_validation->set_message('matches','Las contraseña no coinciden');
 		
 		
 		// ¿Hay post?

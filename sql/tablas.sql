@@ -43,6 +43,7 @@ CREATE TABLE entrenamiento (
 ) ENGINE = InnoDB;
 
 CREATE TABLE eventodeportivo (
+	id INT AUTO_INCREMENT PRIMARY KEY,
 	nombre_evento  VARCHAR(50)   NOT NULL,
 	temperatura_esperada VARCHAR (20)  NOT NULL,
 	lugar VARCHAR (20)  NOT NULL,
@@ -50,5 +51,34 @@ CREATE TABLE eventodeportivo (
 	direccion_url  VARCHAR(50)   NOT NULL,
 	categoria VARCHAR(50)   NULL
 ) ENGINE = InnoDB;
+
+CREATE TABLE eventoComentario (
+    idEvento INT,
+    comentario VARCHAR(200)
+);
+
+CREATE TABLE resultados_futbol(
+	idEvento INT,
+	nombre_usuario VARCHAR(100),
+	nombre_equipo1 VARCHAR(100),
+	nombre_equipo2 VARCHAR(100),
+	marcador_equipo1 INT,
+	marcador_equipo2 INT
+);
+
+CREATE TABLE resultados_baloncesto (
+	idEvento INT,
+	nombre_usuario VARCHAR(100),
+	nombre_equipo1 VARCHAR(100),
+	nombre_equipo2 VARCHAR(100),
+	marcador_equipo1 INT,
+	marcador_equipo2 INT
+);
+
+CREATE TABLE resultados_pesas (
+	idEvento INT,
+	nombre_usuario VARCHAR(100),
+	peso_levantado FLOAT
+);
 
 
