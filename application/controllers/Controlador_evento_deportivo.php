@@ -125,6 +125,9 @@ class Controlador_evento_deportivo extends CI_Controller
 	public function registrar_comentario() {
 		$this->form_validation->set_rules('comentario', 'comentario', 'required|max_length[199]');
 		
+		$this->form_validation->set_message('max_length', 'El comentario debe tener menos de 200 caracteres');
+		
+		
 		$miId = $this->input->post('idEvento');
 		$comentario = $this->input->post('comentario');
 		$parametros = [
