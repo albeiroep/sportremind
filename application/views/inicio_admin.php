@@ -14,9 +14,10 @@
 				</div>
 				<div class="collapse navbar-collapse" id="navbar-1">
 					<ul class="nav navbar-nav">
-						<li><a href="<?php echo base_url() ?>index.php/Controlador_evento_deportivo/consultar_eventos_deportivos">Eventos deportivos</a></li>
+						<li><a href="<?php echo base_url() ?>index.php/Controlador_evento_deportivo/cargar_eventos">Eventos deportivos</a></li>
 						<li><a href="<?php echo base_url() ?>index.php/ControladorUsuario/logoff">Salir de sesión</a></li>
 					</ul>
+
 					<form action="" class="navbar-form navbar-right" role="search">
 						<div class="form-group">
 							<input type="text" class="form-control" placeholder="Buscar">

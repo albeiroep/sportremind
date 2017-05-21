@@ -92,6 +92,68 @@ class Evento_deportivo extends CI_Model {
 		$query=$this->db->get('eventodeportivo');
 		return $query->result();
 	}
+	
+	public function traer_cantidad_eventos(){
+		$this->load->database();
+		$query=$this->db->get('eventodeportivo');
+		return $query->num_rows();
+	}
+	
+	public function traer_eventos($parametros){
+		$this->load->database();
+		if (is_array($parametros))
+			settype($parametros, 'object');
+			if($parametros->temperatura_esperada != ''){
+				$this->db->where('temperatura_esperada', $parametros->temperatura_esperada);
+			}
+			if($parametros->nombre_evento != ''){
+				$this->db->where('nombre_evento', $parametros->nombre_evento);
+			}
+			if($parametros->fecha_inicial != '' && $parametros->fecha_final == ''){
+				$this->db->where('fecha >= ', $parametros->fecha_inicial);
+			} else {
+				if($parametros->fecha_inicial != '' && $parametros->fecha_final != ''){
+					$this->db->where('fecha >= ', $parametros->fecha_inicial);
+					$this->db->where('fecha <= ', $parametros->fecha_final);
+				} else {
+					if ($parametros->fecha_inicial == '' && $parametros->fecha_final != '') {
+						$this->db->where('fecha <= ', $parametros->fecha_final);
+					}
+				}
+			}
+			if ($parametros->lugar != '') {
+				$this->db->where('lugar ', $parametros->lugar);
+			}
+			if($parametros->categoria != ''){
+				$this->db->where('categoria', $parametros->categoria);
+			}
+			$query = $this->db->get('eventodeportivo');
+			if($query->num_rows() > 0){
+				return $query->result();
+			} else {
+				return '';
+			}
+			
+	}
+	
+	public function insertar_comentario($parametros){
+		return $this->db->insert('eventoComentario', $parametros);
+	}
+	
+	public function insertar_resultados_futbol($parametros){
+		$this->load->database();
+		return $this->db->insert('resultados_futbol', $parametros);
+	}
+	
+	public function insertar_resultados_baloncesto($parametros){
+		$this->load->database();
+		return $this->db->insert('resultados_baloncesto', $parametros);
+	}
+	
+	public function insertar_resultados_pesas($parametros) {
+		$this->load->database();
+		return $this->db->insert('resultados_pesas', $parametros);
+	}
 }
 
 ?>
