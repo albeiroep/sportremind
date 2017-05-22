@@ -6,8 +6,9 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/estilos.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/datepicker.css"/>
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/estilostabla.css"/>
 </head>
-<body>
+<body background="<?php echo base_url(); ?>img/fondo.png" >
 	<header>
 		<div class="container">
 			<h1>Sport Remind</h1>

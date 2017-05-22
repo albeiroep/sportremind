@@ -75,7 +75,7 @@
 ?>
 
 <div class='container'>
-  <div class="row"> 
+  <div class="row" style="background: rgba(255, 255, 255, .8)"> 
     <div class="col-md-5">
       <p><h1>Iniciar Sesión</h1></p>
       <?php echo form_open('ControladorUsuario/checklogin'); ?> 

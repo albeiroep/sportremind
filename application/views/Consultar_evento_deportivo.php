@@ -5,7 +5,7 @@
 <div id="filtros" class="row">
 	<?php echo form_open('Controlador_evento_deportivo/listar_eventos'); ?> 
       <?php echo validation_errors(); ?>
-        <div class="border col-xs-6">
+        <div class="border col-xs-6" style="background: rgba(255, 255, 255, .8);">
         <div class="form-group">
           <?= form_label('Nombre de Evento:','','class="form-control"',['id'=>'nombre_evento']); ?>
           <br>
@@ -22,7 +22,7 @@
           <?= form_input('lugar','','class="form-control"',['id'=>'lugar']); ?>
         </div>
         </div>
-        <div class="border col-xs-6">
+        <div class="border col-xs-6" style="background: rgba(255, 255, 255, .8);">
         <div class="form-group">
           <?= form_label('Fecha Inicial:','','class="form-control"',['id'=>'fecha_inicial']); ?>
           <br>
@@ -47,7 +47,7 @@
 	<p style="font-size:26px;">Listado de Eventos</p>
 </div>
 </br>
-<div align="center">
+<div align="center" style="background: rgba(255, 255, 255, .8);">
 <table border="2">
 	<tr>
 		<td>Nombre</td>
