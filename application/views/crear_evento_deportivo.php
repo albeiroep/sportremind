@@ -24,7 +24,7 @@
   $tem = array(
           'name'        => 'temperatura_esperada',
           'value'       => $temperatura_esperada,
-          'placeholder' =>'temperatura_esperada*',
+          'placeholder' =>'Temperatura esperada*',
           'class'       => 'form-control',
         );
 
@@ -52,14 +52,14 @@
   $categ = array(
           'name'        => 'categoria',
           'value'       => $categoria,
-          'placeholder' =>'categoria*',
+          'placeholder' =>'Categoria*',
           'class'       => 'form-control',
         );
 
 ?>
 
 <div class='container'>
-  <div class="row"> 
+  <div class="row" style="background: rgba(255, 255, 255, .8)"> 
     <div class="col-md-5 col-md-offset-3">
       <p><h1>Crear Evento Deportivo</h1></p>
       <?php echo form_open_multipart("/Controlador_evento_deportivo/create"); ?> 

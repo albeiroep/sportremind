@@ -11,11 +11,6 @@ class Controlador_evento_deportivo extends CI_Controller
 		$this->load->view('crear_evento_deportivo');
 	}
 
-	//public function datos()
-	//{
-	//	$this->load->view('ver_datos_proyecto');
-	//}
-
 	public function create(){
 		$this->load->library('form_validation');
 
@@ -65,6 +60,9 @@ class Controlador_evento_deportivo extends CI_Controller
 			$this->load->view('footer');
 		} else {
 			echo "<script language=\"javascript\">alert('No hay eventos registrados en el sistema');</script>";
+			$this->load->view('header');
+			$this->load->view('inicio');
+			$this->load->view('footer');
 		}
 	}
 	

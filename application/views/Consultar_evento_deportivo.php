@@ -1,11 +1,16 @@
-<div>
-	<p style="font-size:26px;">Parámetros de Búsqueda</p>
-</div>
-</br>
-<div id="filtros" class="row">
-	<?php echo form_open('Controlador_evento_deportivo/listar_eventos'); ?> 
+<div class="container" style="background: rgba(255, 255, 255, .8);">
+     <br>
+     <br>
+     <br>
+  <div>
+    <br>
+	  <p style="font-size:26px;"> Parámetros de Búsqueda</p>
+  </div>
+  </br>
+  <div id="filtros" class="row">
+	 <?php echo form_open('Controlador_evento_deportivo/listar_eventos'); ?> 
       <?php echo validation_errors(); ?>
-        <div class="border col-xs-6" style="background: rgba(255, 255, 255, .8);">
+        <div class="border col-xs-6">
         <div class="form-group">
           <?= form_label('Nombre de Evento:','','class="form-control"',['id'=>'nombre_evento']); ?>
           <br>
@@ -47,9 +52,9 @@
 	<p style="font-size:26px;">Listado de Eventos</p>
 </div>
 </br>
-<div align="center" style="background: rgba(255, 255, 255, .8);">
-<table border="2">
-	<tr>
+<div align="center">
+<table class="table table-bordered table-condensed">
+	<tr class="success">
 		<td>Nombre</td>
 		<td>Temperatura Esperada</td>
 		<td>Lugar</td>
@@ -73,7 +78,8 @@
 		<td><a href="<?php echo base_url() ?>index.php/Controlador_evento_deportivo/editar?itemid=<?=$miEvento->id;?>"><input type="button" value="Editar" name="submit" /></a></td>
 		<td><a href="<?php echo base_url() ?>index.php/Controlador_evento_deportivo/eliminar?itemid=<?=$miEvento->id;?>"><input type="button" value="Eliminar" name="submit" /></a></td>
 		<td><a href="<?php echo base_url() ?>index.php/Controlador_evento_deportivo/ingresar_resultados?itemid=<?=$miEvento->id;?>"><input type="button" value="Ingresar Resultados" name="submit" /></a></td>
-	</tr>
-	<?php } ?>
-</table>
+	 </tr>
+	 <?php } ?>
+  </table>
+  </div>
 </div>

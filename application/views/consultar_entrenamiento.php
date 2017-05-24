@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" style="background: rgba(255, 255, 255, .8);">
 	<?php if(isset($entrenamiento)): ?>
 		<br><?php
     	echo $entrenamiento;
@@ -15,6 +15,8 @@
 			<td>Fecha</td>
 			<td>Lugar</td>
 			<td>Imagen</td>
+			<td></td>
+			<td></td>
 		</tr>
 		<?php foreach ($datos as $dato) {
 			$id_usuario1= $dato->id_usuario;

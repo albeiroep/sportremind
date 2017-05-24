@@ -58,7 +58,7 @@
 ?>
 
 <div class='container'>
-  <div class="row"> 
+  <div class="row" style="background: rgba(255, 255, 255, .8);"> 
     <div class="col-md-5 col-md-offset-3">
       <p><h1>Publicar Entrenamiento</h1></p>
       <?php echo form_open_multipart("/Controlador_entrenamiento/publicar_entrenamiento?itemid=$id_usuario"); ?> 
