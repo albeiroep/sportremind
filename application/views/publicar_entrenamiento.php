@@ -49,11 +49,6 @@
           'class'       => 'form-control',
         );
 
-  $img = array(
-          'name'        => 'imagen',
-          'value'       => $imagen,
-        );
-
   $id_usuario=$_GET['itemid'];
 ?>
 
@@ -75,9 +70,6 @@
           <br>
           <td><?= form_input($lug, ['id'=>'lugar']); ?></td>
           <br>
-          <td><?= form_label('Imagen (.jpg, .png o .gif)'); ?></td>
-          <td><?= form_upload($img, ['id'=>'imagen']); ?></td>
-		      <br>
           <input type="submit" value="Publicar" class="btn btn-primary" /></a>
           <br>
           <p class="help-block">* Indica los campos del formulario que son obligatorios</p>

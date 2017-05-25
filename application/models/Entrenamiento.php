@@ -8,7 +8,6 @@ class Entrenamiento extends CI_Model {
 	private $calorias_perdidas;
 	private $fecha;
 	private $lugar;
-	private $imagen;
 
 	public function __construct($value = null) {
 		parent::__construct();
@@ -23,7 +22,6 @@ class Entrenamiento extends CI_Model {
 				$this->calorias_perdidas = isset($value->calorias_perdidas)? $value->calorias_perdidas : null;
 				$this->fecha = isset($value->fecha)? $value->fecha : null;
 				$this->lugar = isset($value->lugar)? $value->lugar : null;
-				$this->imagen = isset($value->imagen)? $value->imagen : null;
 			}
 		}
 	}
@@ -35,7 +33,6 @@ class Entrenamiento extends CI_Model {
 			case 'calorias_perdidas':
 			case 'fecha':
 			case 'lugar':
-			case 'imagen':
 				return $this->$key;
 			default:
 				return parent::__get($key);
@@ -81,7 +78,6 @@ class Entrenamiento extends CI_Model {
 			'calorias_perdidas' => $this->calorias_perdidas,
 			'fecha' => $this->fecha,
 			'lugar' => $this->lugar,
-			'imagen' => $this->imagen,
 		];
 
 		return $this->db->insert('entrenamiento', $data);
@@ -97,7 +93,6 @@ class Entrenamiento extends CI_Model {
 
 	public function consultar_entrenamiento()
 	{
-		
 		$this->db->where('id', $_GET['itemid']);
 		$query=$this->db->get('entrenamiento');
 		return $query->result();
@@ -119,7 +114,6 @@ class Entrenamiento extends CI_Model {
 			'calorias_perdidas' => $this->calorias_perdidas,
 			'fecha' => $this->fecha,
 			'lugar' => $this->lugar,
-			'imagen' => $this->imagen,
 		];
 
 		$this->db->where('id', $id);

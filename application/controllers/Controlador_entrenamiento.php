@@ -17,13 +17,11 @@ class Controlador_entrenamiento extends CI_Controller
 		$this->form_validation->set_rules('calorias_perdidas', 'calorías pérdidas', 'required');
 		$this->form_validation->set_rules('fecha', 'fecha', 'required|callback_validar_fecha');
 		$this->form_validation->set_rules('lugar', 'lugar', 'required');
-		//$this->form_validation->set_rules('imagen', 'imagen', 'callback_validar_archivo');
 
 		//Mensajes
             // %s es el nombre del campo que ha fallado
 		$this->form_validation->set_message('required','El campo %s es obligatorio');
 		$this->form_validation->set_message('validar_fecha','El campo %s no es correcto, por favor ingrésalo nuevamente');
-		//$this->form_validation->set_message('validar_archivo','El archivo no es del tipo requerido, por favor ingrese una imagen correcta'); 
 
 		//Si los datos ingresados en el formulario no son correctos se regresa  a la vista sin guardar los datos en la bd.
 
@@ -37,7 +35,6 @@ class Controlador_entrenamiento extends CI_Controller
 			$data['calorias_perdidas']=$this->input->post('calorias_perdidas');
 			$data['fecha']=$this->input->post('fecha');
 			$data['lugar']=$this->input->post('lugar');
-			$data['imagen']=$this->input->post('imagen');
 
 			$this->load->view('header');
 			$this->load->view('publicar_entrenamiento', $data);
@@ -86,12 +83,35 @@ class Controlador_entrenamiento extends CI_Controller
 
 	public function editar_entrenamiento()
 	{
+
+		$data['id_usuario']=$_GET['id_usuario']; 
+
 		$this->load->model('Entrenamiento');
 		$data['datos']=$this->Entrenamiento->consultar_entrenamiento();
+		$dat=$this->Entrenamiento->consultar_entrenamiento();
 
-		$this->load->view('header');
-		$this->load->view('editar_entrenamiento', $data);
-		$this->load->view('footer');
+		$idU=0;
+
+		foreach ($dat as $dato) {
+			$idU=$dato->id_usuario; 
+		}
+
+		if ($idU==0){
+
+			$this->load->model('Entrenamiento');
+			$data['datos']=$this->Entrenamiento->consultar_entrenamientos_por_usuario($_GET['id_usuario']);
+			
+			$data['entrenamiento']='Este entrenamiento ha sido eliminado';
+			$this->load->view('header');
+			$this->load->view('consultar_entrenamiento', $data);
+			$this->load->view('footer');
+
+		}else{
+
+			$this->load->view('header');
+			$this->load->view('editar_entrenamiento', $data);
+			$this->load->view('footer');
+		}
 	}
 
 	public function editar(){
@@ -119,11 +139,11 @@ class Controlador_entrenamiento extends CI_Controller
 			$data['datos']=$this->Entrenamiento->consultar_entrenamiento();
 
 			$this->load->view('header');
-			$this->load->view('editar_entrenamiento', $data);
+			$this->load->view('consultar_entrenamiento', $data);
 			$this->load->view('footer', $data);
 
 		}else{
-
+		
 			$this->load->model('Entrenamiento');
 			$Entrenamiento1=new Entrenamiento($this->input->post());
 			if($Entrenamiento1->actualizar($id_entrenamiento)){
@@ -144,41 +164,45 @@ class Controlador_entrenamiento extends CI_Controller
 
 	public function eliminar_entrenamiento()
 	{
+
+		$data['id_usuario']=$_GET['id_usuario'];
+
 		$this->load->model('Entrenamiento');
-		$Entrenamiento1=new Entrenamiento();
-		if($Entrenamiento1->eliminar()){
-			$data['entrenamiento']="El entrenamiento fue eliminado satisfactoriamente";
-		}else{
-			$data['entrenamiento']="El entrenamiento no pudo ser eliminado";
+		$data['datos']=$this->Entrenamiento->consultar_entrenamiento();
+		$dat=$this->Entrenamiento->consultar_entrenamiento();
+
+		$idU=0;
+
+		foreach ($dat as $dato) {
+			$idU=$dato->id_usuario; 
 		}
-		
-		$this->load->model('Entrenamiento');
+
+		if ($idU==0){
+			
+			$this->load->model('Entrenamiento');
 			$data['datos']=$this->Entrenamiento->consultar_entrenamientos_por_usuario($_GET['id_usuario']);
-		$this->load->view('header');
-		$this->load->view('consultar_entrenamiento', $data);
-		$this->load->view('footer');
-	}
+			
+			$data['entrenamiento']='Este entrenamiento ya habia sido eliminado';
+			$this->load->view('header');
+			$this->load->view('consultar_entrenamiento', $data);
+			$this->load->view('footer');
 
-	public function validar_archivo($imagen)
-	{
-		//$mi_imagen = 'mi_archivo';
-        $config['upload_path'] = APPPATH."./uploads/";
-        $config['file_name'] = "nombre_archivo";
-        $config['allowed_types'] = "gif|jpg|jpeg|png";
-        $config['max_size'] = "50000";
-        $config['max_width'] = "2000";
-        $config['max_height'] = "2000";
+		}else{
 
-	$this->load->library('upload', $config);
-
-        if (!$this->upload->do_upload($imagen)) {
-            //*** ocurrio un error
-            $data['uploadError'] = $this->upload->display_errors();
-            echo $this->upload->display_errors();
-            return;
-        }
-
-        $data['uploadSuccess'] = $this->upload->data();
+			$this->load->model('Entrenamiento');
+			$Entrenamiento1=new Entrenamiento();
+			if($Entrenamiento1->eliminar()){
+				$data['entrenamiento']="El entrenamiento fue eliminado satisfactoriamente";
+			}else{
+				$data['entrenamiento']="El entrenamiento no pudo ser eliminado";
+			}
+		
+			$this->load->model('Entrenamiento');
+				$data['datos']=$this->Entrenamiento->consultar_entrenamientos_por_usuario($_GET['id_usuario']);
+			$this->load->view('header');
+			$this->load->view('consultar_entrenamiento', $data);
+			$this->load->view('footer');
+		}
 	}
 
 	public function validar_fecha($fecha)

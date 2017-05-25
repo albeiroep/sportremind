@@ -14,7 +14,6 @@
 			<td>Calorías perdidas</td>
 			<td>Fecha</td>
 			<td>Lugar</td>
-			<td>Imagen</td>
 			<td></td>
 			<td></td>
 		</tr>
@@ -28,8 +27,7 @@
 			<td><?= $dato->calorias_perdidas; ?></td>
 			<td><?= $dato->fecha; ?></td>
 			<td><?= $dato->lugar; ?></td>
-			<td><?= $dato->imagen; ?></td>
-			<td><a href="<?php echo base_url() ?>index.php/Controlador_entrenamiento/editar_entrenamiento?itemid=<?=$dato->id;?>"><button class="btn btn-sm btn-success"><span class="glyphicon glyphicon-pencil"></span>  Editar entrenamiento</button></a><br></td>
+			<td><a href="<?php echo base_url() ?>index.php/Controlador_entrenamiento/editar_entrenamiento?itemid=<?=$dato->id?>&id_usuario=<?=$id_usuario1?>"><button class="btn btn-sm btn-success"><span class="glyphicon glyphicon-pencil"></span>  Editar entrenamiento</button></a><br></td>
 			<td><a onclick="if(confirma() == false) return false" href="<?php echo base_url() ?>index.php/Controlador_entrenamiento/eliminar_entrenamiento?itemid=<?=$dato->id?>&id_usuario=<?=$id_usuario1?>"><button class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span>  Eliminar entrenamiento</button></a><br></td>
 		
 		</tr>

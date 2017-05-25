@@ -32,13 +32,6 @@ foreach ($datos as $dato) {
           'class'       => 'form-control',
         );
 
-  $img = array(
-          'name'        => 'imagen',
-          'value'       => $dato->imagen,
-          'placeholder' =>'Imagen',
-          'class'       => 'form-control',
-        );
-
   $fec = array(
           'name'        => 'fecha',
           'value'       => $dato->fecha,
@@ -69,8 +62,6 @@ $id=$_GET['itemid'];
           <br>
           <td><?= form_input($fec, ['id'=>'fecha']); ?></td>
           <br>
-          <td><?= form_input($img, ['id'=>'imagen']); ?></td>
-		      <br>
         <?= form_submit('sbm', 'Editar', 'class="btn btn-primary"'); ?>
       <?= form_close(); ?>
     </div>
