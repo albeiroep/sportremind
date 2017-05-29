@@ -50,24 +50,23 @@
 </br>
 </br>
 </br>
-<br>
-  <?php if(isset($evento1)): ?>
-    <div class="alert alert-success">
-      <button class="close" data-dismiss="alert"><span>&times;</span></button>
-      <?php
-        echo $entrenamiento1;
-      ?></div>
-    <?php endif;
-    ?>
-  
-  <?php if(isset($evento2)): ?>
-    <div class="alert alert-danger">
+<?php if(isset($evento1)): ?>
+  <div class="alert alert-success">
     <button class="close" data-dismiss="alert"><span>&times;</span></button>
-      <?php
-        echo $entrenamiento2;
-      ?></div>
-    <?php endif;
-  ?>  
+    <?php
+      echo $evento1;
+    ?></div>
+  <?php endif;
+?>
+  
+<?php if(isset($evento2)): ?>
+  <div class="alert alert-danger">
+  <button class="close" data-dismiss="alert"><span>&times;</span></button>
+    <?php
+      echo $evento2;
+    ?></div>
+  <?php endif;
+?>  
 <div>
 	<p style="font-size:26px;">Listado de Eventos</p>
 </div>
@@ -95,14 +94,22 @@
 		<td><?=$miEvento->fecha ?></td>
 		<td><?=$miEvento->direccion_url ?></td>
 		<td><?=$miEvento->categoria ?></td>
-		<td><a href="<?php echo base_url() ?>index.php/Controlador_evento_deportivo/ingresar_comentario?itemid=<?=$miEvento->id;?>"><button class="btn btn-sm btn-info"><span class="glyphicon glyphicon-thumbs-down"></span>  Comentar evento deportivo</button></a></td>
-		<td><a href="<?php echo base_url() ?>index.php/Controlador_evento_deportivo/ingresar_resultados?itemid=<?=$miEvento->id;?>"><button class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-send"></span>  Ingresar resultado evento deportivo</button></a></td>
+		<td><a href="<?php echo base_url() ?>index.php/Controlador_evento_deportivo/editar_evento_deportivo?itemid=<?=$miEvento->id?>"><button class="btn btn-sm btn-success"><span class="glyphicon glyphicon-pencil"></span>  Editar evento deportivo</button></a></td>
+    <td><a onclick="if(confirma() == false) return false" href="<?php echo base_url() ?>index.php/Controlador_evento_deportivo/eliminar_evento_deportivo?itemid=<?=$miEvento->id?>"><button class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span>  Eliminar evento deportivo</button></a></td>
+		<td><a href="<?php echo base_url() ?>index.php/Controlador_evento_deportivo/ingresar_resultados?itemid=<?=$miEvento->id;?>"><button class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-send"></span>   Ingresar resultado evento deportivo</button></a></td>
 	 </tr>
 	 <?php } ?>
   </table>
   </div>
-  <br>
+  </br>
+  <div>
+    <p style="font-size:26px;">Crear un Evento Deportivo</p>
+  </div>
+  <td><a href="<?php echo base_url() ?>index.php/Controlador_evento_deportivo/crear_evento_deportivo"><button class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span>  Crear Evento Deportivo</button></a><br></td>
+  </br>
 </div>
+
+ 
 
 <script type="text/javascript">
 function confirma(){

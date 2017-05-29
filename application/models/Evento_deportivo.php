@@ -72,14 +72,6 @@ class Evento_deportivo extends CI_Model {
 			return $errores;
 		}
 	}
-
-	public function consultar_evento_deportivo_por_usuario($id)
-	{
-		
-		$this->db->where('id_usuario', $id);
-		$query=$this->db->get('eventodeportivo');
-		return $query->result();
-	}
 	
 	public function consultar_evento_deportivo()
 	{
@@ -98,7 +90,7 @@ class Evento_deportivo extends CI_Model {
 		return $query->result();
 	}
 
-	public function registrar($id_usuario) {
+	public function registrar() {
 		$data = [
 			'nombre_evento' => $this->nombre_evento,
 			'temperatura_esperada' => $this->temperatura_esperada,

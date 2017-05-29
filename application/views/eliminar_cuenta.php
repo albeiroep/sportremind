@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 
 <?php echo form_open('ControladorUsuario/pregunta_eliminar'); ?>
-	<div class="container">
+	<div class="container" style="background: rgba(255, 255, 255, .8);">
 		<p> Escribe aquí tu motivo para eliminar tu cuenta: </p>
 		<br>
 		<?php 

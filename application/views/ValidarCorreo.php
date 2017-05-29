@@ -7,7 +7,7 @@
         <h3>Correo Enviado:</h3>
         <p>Un correo ha sido enviado al correo proveído.</p>
     <?php endif; ?>
-        <div class="container">
+        <div class="container" style="background: rgba(255, 255, 255, .8);">
             <div class="form-group">
                 <?= form_label('Correo:','','class="form-control"',['id'=>'correo']); ?>
                 <br>

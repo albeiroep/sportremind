@@ -2,8 +2,6 @@
 
 foreach ($misEventos as $miEvento) {
 
-  $id_usuario = $miEvento->id_usuario;
-
   $nom = array(
           'name'        => 'nombre_evento',
           'value'       => $miEvento->nombre_evento,
@@ -29,7 +27,7 @@ foreach ($misEventos as $miEvento) {
           'name'        => 'fecha',
           'value'       => $miEvento->fecha,
           'placeholder' =>'Fecha (yyyy/mm/dd)*',
-          'class'       => 'datepicker',
+          'class'       => 'form-control datepicker',
         );
 
   $dir = array(
@@ -51,13 +49,13 @@ $id=$_GET['itemid'];
 
 ?>
 
-<div class='container'>
+<div class="container" style="background: rgba(255, 255, 255, .8);">
   <div class="row"> 
     <div class="col-md-5 col-md-offset-3">
       <p><h1>Editar Evento Deportivo</h1></p>
       <?php echo form_open("/Controlador_evento_deportivo/editar?itemid=$id"); ?> 
       <?php echo validation_errors(); ?>
-          <td><?= form_hidden('id_usuario', $id_usuario, ['id'=>'id_usuario']); ?></td>
+          <td><?= form_hidden('id', $id, ['id'=>'id']); ?></td>
           <br>
           <td><?= form_input($nom, ['id'=>'nombre_evento']); ?></td>
           <br>
@@ -66,7 +64,6 @@ $id=$_GET['itemid'];
           <td><?= form_input($lug, ['id'=>'lugar']); ?></td>
           <br>
           <td><?= form_input($fec, ['id'=>'fecha']); ?></td>
-          <br>
           <br>
           <td><?= form_input($dir, ['id'=>'direccion_url']); ?></td>
           <br>

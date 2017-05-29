@@ -196,7 +196,7 @@ class Controlador_entrenamiento extends CI_Controller
 			}
 		
 			$this->load->model('Entrenamiento');
-				$data['datos']=$this->Entrenamiento->consultar_entrenamientos_por_usuario($_GET['id_usuario']);
+			$data['datos']=$this->Entrenamiento->consultar_entrenamientos_por_usuario($_GET['id_usuario']);
 			$this->load->view('header');
 			$this->load->view('consultar_entrenamiento', $data);
 			$this->load->view('footer');

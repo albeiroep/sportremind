@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" style="background: rgba(255, 255, 255, .8);">
 	<p align="center"> Esta seguro que desea eliminar la cuenta? </p>
 	<br>
 	<div class="row">

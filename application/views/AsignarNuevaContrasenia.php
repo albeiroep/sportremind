@@ -4,7 +4,7 @@
         <p><?php echo validation_errors(); ?></p>
     <?php endif; ?>
     <h2>Cambio de Contraseña</h2>
-	<div class="container">
+	<div class="container" style="background: rgba(255, 255, 255, .8);">
             <div class="form-group">
                 <?= form_label('Correo:','','class="form-control"',['id'=>'email']); ?>
                 <br>

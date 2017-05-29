@@ -3,10 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
 * 
 */
+
 class Controlador_evento_deportivo extends CI_Controller
 {
-	
-	private $id;
 
 	public function crear_evento_deportivo(){
 
@@ -23,7 +22,6 @@ class Controlador_evento_deportivo extends CI_Controller
             // %s es el nombre del campo que ha fallado
 		$this->form_validation->set_message('required','El campo %s es obligatorio'); 
 
-		$id_usuario=$_GET['itemid'];
 
 		if($this->form_validation->run()===FALSE){
 
@@ -43,48 +41,71 @@ class Controlador_evento_deportivo extends CI_Controller
 
        		$this->load->model('Evento_deportivo');
 			$EventoDeportivo1=new Evento_deportivo($this->input->post());
-			if($EventoDeportivo1->registrar($id_usuario)){
-				$data['evento']="el evento deportivo ha sido publicado exitosamente";
+			if($EventoDeportivo1->registrar()){
+				$data['evento1']="El evento deportivo ha sido publicado exitosamente";
 			}else{
-				$data['evento']="El evento deportivo no pudo ser publicado";
+				$data['evento2']="El evento deportivo no pudo ser publicado";
 			}
 
-			$this->load->model('Evento_deportivo');
-			$data['misEventos']=$this->Evento_deportivo->consultar_evento_deportivo_por_usuario($id_usuario);
-			
-			$this->load->view('header');
-			$this->load->view('Consultar_evento_deportivo', $data);
-			$this->load->view('footer');
+			$this->consultar_eventos_deportivos($data);
 		}
 	}
 
-	public function consultar_eventos_deportivos()
+	public function consultar_eventos_deportivos($data)
 	{
-		$this->load->model('Usuario');
-		$usuario1=new Usuario();
-		$id=$usuario1->consultar_id();
 
-		foreach ($id as $ids) {
-			$identificacion=$ids->id; 
-			$data['id_usuario']=$ids->id; 
+		$this->load->model('Usuario');
+		$Usuario1=new Usuario();
+		$tipo_u=$Usuario1->consultar_tipo_usuario($this->session->userdata('nombre_usuario'));
+
+		foreach ($tipo_u as $tipos) {
+				$tipo=$tipos->tipo_usuario; 
 		}
 
 		$this->load->model('Evento_deportivo');
-		$data['misEventos']=$this->Evento_deportivo->consultar_evento_deportivo_por_usuario($identificacion);
+		$data['misEventos']=$this->Evento_deportivo->get_all();
 
-		$this->load->view('header');
-		$this->load->view('Consultar_eventos_deportivos', $data);
-		$this->load->view('footer');
+		if ($tipo=='Administrador') {
+
+			$this->load->view('header');
+			$this->load->view('Consultar_evento_deportivo_admin', $data);
+			$this->load->view('footer');
+
+		}else{
+
+			$this->load->view('header');
+			$this->load->view('Consultar_evento_deportivo', $data);
+			$this->load->view('footer');
+
+		}
 
 	}
+
 	public function editar_evento_deportivo()
 	{
 		$this->load->model('Evento_deportivo');
 		$data['misEventos']=$this->Evento_deportivo->consultar_evento_deportivo();
+		$dat=$this->Evento_deportivo->consultar_evento_deportivo();
 
-		$this->load->view('header');
-		$this->load->view('editar_evento_deportivo', $data);
-		$this->load->view('footer');
+		$idU=0;
+
+		foreach ($dat as $dato) {
+			$idU=$dato->id; 
+		}
+
+		if ($idU==0){
+			
+			$data['evento2']='Este entrenamiento ha sido eliminado';
+			
+			$this->consultar_eventos_deportivos($data);
+
+		}else{
+
+			$this->load->view('header');
+			$this->load->view('editar_evento_deportivo', $data);
+			$this->load->view('footer');
+		}
+
 	}
 
 
@@ -120,17 +141,12 @@ class Controlador_evento_deportivo extends CI_Controller
        		$this->load->model('Evento_deportivo');
 			$EventoDeportivo1=new Evento_deportivo($this->input->post());
 			if($EventoDeportivo1->actualizar($id_eventodeportivo)){
-				$data['evento']="el evento deportivo fue actualizado satisfactoriamente";
+				$data['evento1']="El evento deportivo fue actualizado satisfactoriamente";
 			}else{
-				$data['evento']="El evento deportivo no pudo ser actualizado";
+				$data['evento2']="El evento deportivo no pudo ser actualizado";
 			}
 
-			$this->load->model('Evento_deportivo');
-			$data['misEventos']=$this->Evento_deportivo->consultar_evento_deportivo_por_usuario($this->input->post('id_usuario'));
-			
-			$this->load->view('header');
-			$this->load->view('Consultar_evento_deportivo', $data);
-			$this->load->view('footer');
+			$this->consultar_eventos_deportivos($data);
 
 		}
 
@@ -139,19 +155,34 @@ class Controlador_evento_deportivo extends CI_Controller
 
 	public function eliminar_evento_deportivo()
 	{
+
 		$this->load->model('Evento_deportivo');
-		$EventoDeportivo1=new Evento_deportivo();
-		if($EventoDeportivo1->eliminar()){
-			$data['evento']="el evento deportivo fue eliminado satisfactoriamente";
-		}else{
-			$data['evento']="El evento deportivo no pudo ser eliminado";
+		$data['datos']=$this->Evento_deportivo->consultar_evento_deportivo();
+		$dat=$this->Evento_deportivo->consultar_evento_deportivo();
+
+		$idE=0;
+
+		foreach ($dat as $dato) {
+			$idE=$dato->id; 
 		}
-		
-		$this->load->model('Evento_deportivo');
-			$data['misEventos']=$this->Evento_deportivo->consultar_evento_deportivo_por_usuario($_GET['id_usuario']);
-		$this->load->view('header');
-		$this->load->view('consultar_evento_deportivo', $data);
-		$this->load->view('footer');
+
+		if ($idE==0){
+
+			$data['evento2']='Este evento deportivo ya habia sido eliminado';
+			$this->consultar_eventos_deportivos($data);
+
+		}else{
+
+			$this->load->model('Evento_deportivo');
+			$EventoDeportivo1=new Evento_deportivo();
+			if($EventoDeportivo1->eliminar()){
+				$data['evento1']="El evento deportivo fue eliminado satisfactoriamente";
+			}else{
+				$data['evento2']="El evento deportivo no pudo ser eliminado";
+			}
+
+			$this->consultar_eventos_deportivos($data);
+		}
 	}
 
 	public function cargar_eventos() {
@@ -161,9 +192,9 @@ class Controlador_evento_deportivo extends CI_Controller
 		if($cantidadEventos > 0){
 			$misEventos = $miEvento->get_all();
 			$data['misEventos'] = $misEventos;
-			$this->load->view('header');
-			$this->load->view('Consultar_evento_deportivo', $data);
-			$this->load->view('footer');
+
+			$this->consultar_eventos_deportivos($data);
+
 		} else {
 			echo "<script language=\"javascript\">alert('No hay eventos registrados en el sistema');</script>";
 			$this->load->view('header');
