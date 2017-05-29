@@ -1,9 +1,23 @@
 <div class="container" style="background: rgba(255, 255, 255, .8);">
-	<?php if(isset($entrenamiento)): ?>
-		<br><?php
-    	echo $entrenamiento;
-    	endif;
-	?>
+	<br>
+	<?php if(isset($entrenamiento1)): ?>
+		<div class="alert alert-success">
+			<button class="close" data-dismiss="alert"><span>&times;</span></button>
+			<?php
+    		echo $entrenamiento1;
+    	?></div>
+    <?php endif;
+    ?>
+	
+	<?php if(isset($entrenamiento2)): ?>
+		<div class="alert alert-danger">
+		<button class="close" data-dismiss="alert"><span>&times;</span></button>
+			<?php
+    		echo $entrenamiento2;
+    	?></div>
+    <?php endif;
+	?>	
+
 	<h1 align="center">Entrenamientos</h1>
 	<br>
 	<table class="table table-bordered table-condensed">

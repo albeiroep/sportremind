@@ -39,7 +39,7 @@
           'name'        => 'fecha',
           'value'       => $fecha,
           'placeholder' =>'Fecha (yyyy/mm/dd)*',
-          'class'       => 'datepicker',
+          'class'       => 'form-control datepicker',
         );
 
   $lug = array(
@@ -66,7 +66,6 @@
           <td><?= form_input($cal, ['id'=>'calorias_perdidas']); ?></td>
           <br>
           <td><?= form_input($fec, ['id'=>'fecha']); ?></td>
-          <br>
           <br>
           <td><?= form_input($lug, ['id'=>'lugar']); ?></td>
           <br>

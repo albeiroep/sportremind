@@ -6,8 +6,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Controlador_entrenamiento extends CI_Controller
 {
 
-	private $id;
-
 	public function publicar_entrenamiento(){
 
 		//Validación de datos ingresados en el formulario
@@ -46,9 +44,9 @@ class Controlador_entrenamiento extends CI_Controller
 			$this->load->model('Entrenamiento');
 			$Entrenamiento1=new Entrenamiento($this->input->post());
 			if($Entrenamiento1->registrar($id_usuario)){
-				$data['entrenamiento']="el entrenamiento ha sido publicado exitosamente";
+				$data['entrenamiento1']="El entrenamiento ha sido publicado exitosamente";
 			}else{
-				$data['entrenamiento']="El entrenamiento no pudo ser publicado";
+				$data['entrenamiento2']="El entrenamiento no pudo ser publicado";
 			}
 
 			$this->load->model('Entrenamiento');
@@ -101,7 +99,7 @@ class Controlador_entrenamiento extends CI_Controller
 			$this->load->model('Entrenamiento');
 			$data['datos']=$this->Entrenamiento->consultar_entrenamientos_por_usuario($_GET['id_usuario']);
 			
-			$data['entrenamiento']='Este entrenamiento ha sido eliminado';
+			$data['entrenamiento2']='Este entrenamiento ha sido eliminado';
 			$this->load->view('header');
 			$this->load->view('consultar_entrenamiento', $data);
 			$this->load->view('footer');
@@ -147,9 +145,9 @@ class Controlador_entrenamiento extends CI_Controller
 			$this->load->model('Entrenamiento');
 			$Entrenamiento1=new Entrenamiento($this->input->post());
 			if($Entrenamiento1->actualizar($id_entrenamiento)){
-				$data['entrenamiento']="El entrenamiento fue actualizado satisfactoriamente";
+				$data['entrenamiento1']="El entrenamiento fue actualizado satisfactoriamente";
 			}else{
-				$data['entrenamiento']="El entrenamiento no pudo ser actualizado";
+				$data['entrenamiento2']="El entrenamiento no pudo ser actualizado";
 			}
 			
 			$this->load->model('Entrenamiento');
@@ -182,7 +180,7 @@ class Controlador_entrenamiento extends CI_Controller
 			$this->load->model('Entrenamiento');
 			$data['datos']=$this->Entrenamiento->consultar_entrenamientos_por_usuario($_GET['id_usuario']);
 			
-			$data['entrenamiento']='Este entrenamiento ya habia sido eliminado';
+			$data['entrenamiento2']='Este entrenamiento ya habia sido eliminado';
 			$this->load->view('header');
 			$this->load->view('consultar_entrenamiento', $data);
 			$this->load->view('footer');
@@ -192,9 +190,9 @@ class Controlador_entrenamiento extends CI_Controller
 			$this->load->model('Entrenamiento');
 			$Entrenamiento1=new Entrenamiento();
 			if($Entrenamiento1->eliminar()){
-				$data['entrenamiento']="El entrenamiento fue eliminado satisfactoriamente";
+				$data['entrenamiento1']="El entrenamiento fue eliminado satisfactoriamente";
 			}else{
-				$data['entrenamiento']="El entrenamiento no pudo ser eliminado";
+				$data['entrenamiento2']="El entrenamiento no pudo ser eliminado";
 			}
 		
 			$this->load->model('Entrenamiento');
@@ -210,8 +208,16 @@ class Controlador_entrenamiento extends CI_Controller
 		$formato = 'Y/m/d';
     	$d = DateTime::createFromFormat($formato, $fecha);
     	$data=$d && $d->format($formato) == $fecha;
-
-    	return $data;
+    	if($data==False){
+    		return $data;
+    	}else{
+    		$fechaActual=date("Y/m/d");
+    		if($fecha>$fechaActual){
+    			return False;
+    		}else{
+    			return True;
+    		}
+    	}
 	}
 }
 

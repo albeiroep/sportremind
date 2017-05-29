@@ -44,7 +44,7 @@ $id=$_GET['itemid'];
 
 ?>
 
-<div class='container'>
+<div class='container' style="background: rgba(255, 255, 255, .8)">
   <div class="row"> 
     <div class="col-md-5 col-md-offset-3">
       <p><h1>Editar Entrenamiento</h1></p>
