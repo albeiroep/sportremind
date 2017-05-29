@@ -73,7 +73,32 @@ class Evento_deportivo extends CI_Model {
 		}
 	}
 
-	public function registrar() {
+	public function consultar_evento_deportivo_por_usuario($id)
+	{
+		
+		$this->db->where('id_usuario', $id);
+		$query=$this->db->get('eventodeportivo');
+		return $query->result();
+	}
+	
+	public function consultar_evento_deportivo()
+	{
+		$this->db->where('id', $_GET['itemid']);
+		$query=$this->db->get('eventodeportivo');
+		return $query->result();
+	}
+
+
+	public function eliminar() {
+
+		$id= $_GET["itemid"];
+		$this->db->where('id', $id);
+		$this->db->delete('eventodeportivo');
+		$query= $this->db->get('eventodeportivo');
+		return $query->result();
+	}
+
+	public function registrar($id_usuario) {
 		$data = [
 			'nombre_evento' => $this->nombre_evento,
 			'temperatura_esperada' => $this->temperatura_esperada,
@@ -84,6 +109,20 @@ class Evento_deportivo extends CI_Model {
 		];
 
 		return $this->db->insert('eventodeportivo', $data);
+	}
+
+	public function actualizar($id) {
+		$data = [
+			'nombre_evento' => $this->nombre_evento,
+			'temperatura_esperada' => $this->temperatura_esperada,
+			'lugar' => $this->lugar,
+			'fecha' => $this->fecha,
+			'direccion_url' => $this->direccion_url,
+			'categoria' => $this->categoria,
+		];
+
+		$this->db->where('id', $id);
+		return $this->db->update('eventodeportivo', $data);
 	}
 
 	public function get_all()

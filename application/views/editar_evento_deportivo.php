@@ -1,73 +1,64 @@
-<br>
-<br>
 <?php
 
-  $nombre_evento=(isset($nombre_evento)) ? $nombre_evento=$nombre_evento : $nombre_evento='';
+foreach ($misEventos as $miEvento) {
 
-  $temperatura_esperada=(isset($temperatura_esperada)) ? $temperatura_esperada=$temperatura_esperada : $temperatura_esperada='';
-
-  $lugar=(isset($lugar)) ? $lugar=$lugar : $lugar='';
-
-  $fecha=(isset($fecha)) ? $fecha=$fecha : $fecha='';
-
-  $direccion_url=(isset($direccion_url)) ? $direccion_url=$direccion_url: $direccion_url='';
-
-  $categoria=(isset($categoria)) ? $categoria=$categoria : $categoria='';  
+  $id_usuario = $miEvento->id_usuario;
 
   $nom = array(
           'name'        => 'nombre_evento',
-          'value'       => $nombre_evento,
+          'value'       => $miEvento->nombre_evento,
           'placeholder' =>'Nombre del evento*',
           'class'       => 'form-control',
         );
 
   $tem = array(
           'name'        => 'temperatura_esperada',
-          'value'       => $temperatura_esperada,
+          'value'       => $miEvento->temperatura_esperada,
           'placeholder' =>'temperatura_esperada*',
           'class'       => 'form-control',
         );
 
   $lug = array(
           'name'        => 'lugar',
-          'value'       => $lugar,
+          'value'       => $miEvento->lugar,
           'placeholder' =>'Lugar*',
           'class'       => 'form-control',
         );
 
   $fec = array(
           'name'        => 'fecha',
-          'value'       => $fecha,
+          'value'       => $miEvento->fecha,
           'placeholder' =>'Fecha (yyyy/mm/dd)*',
           'class'       => 'datepicker',
         );
 
   $dir = array(
           'name'        => 'direccion_url',
-          'value'       => $direccion_url,
+          'value'       => $miEvento->direccion_url,
           'placeholder' =>'Direccion Url*',
           'class'       => 'form-control',
         );
 
   $categ = array(
           'name'        => 'categoria',
-          'value'       => $categoria,
+          'value'       => $miEvento->categoria,
           'placeholder' =>'categoria*',
           'class'       => 'form-control',
         );
+}
 
-  
-  $id_usuario=$_GET['itemid'];
+$id=$_GET['itemid'];
 
 ?>
 
 <div class='container'>
   <div class="row"> 
     <div class="col-md-5 col-md-offset-3">
-      <p><h1>Crear Evento Deportivo</h1></p>
-      <?php echo form_open_multipart("/Controlador_evento_deportivo/crear_evento_deportivo?itemid=$id_usuario"); ?> 
+      <p><h1>Editar Evento Deportivo</h1></p>
+      <?php echo form_open("/Controlador_evento_deportivo/editar?itemid=$id"); ?> 
       <?php echo validation_errors(); ?>
-         
+          <td><?= form_hidden('id_usuario', $id_usuario, ['id'=>'id_usuario']); ?></td>
+          <br>
           <td><?= form_input($nom, ['id'=>'nombre_evento']); ?></td>
           <br>
           <td><?= form_input($tem, ['id'=>'temperatura_esperada']); ?></td>
@@ -81,13 +72,12 @@
           <br>
           <td><?= form_input($categ, ['id'=>'categoria']); ?></td>
           <br>
-          <input type="submit" value="crear" class="btn btn-primary" /></a>
-          <br>
-          <p class="help-block">* Indica los campos del formulario que son obligatorios</p>
+          <?= form_submit('sbm', 'Editar', 'class="btn btn-primary"'); ?>
       <?= form_close(); ?>
-
     </div>
+
     <br>
+
     <?php if(isset($evento)):
           echo $evento;
           endif;

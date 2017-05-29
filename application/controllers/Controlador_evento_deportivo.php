@@ -5,13 +5,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 class Controlador_evento_deportivo extends CI_Controller
 {
-	public function index()
-	{
-		$this->load->view('header');
-		$this->load->view('crear_evento_deportivo');
-	}
+	
+	private $id;
 
-	public function create(){
+	public function crear_evento_deportivo(){
+
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('nombre_evento', 'nombre_evento', 'required');
@@ -25,27 +23,135 @@ class Controlador_evento_deportivo extends CI_Controller
             // %s es el nombre del campo que ha fallado
 		$this->form_validation->set_message('required','El campo %s es obligatorio'); 
 
+		$id_usuario=$_GET['itemid'];
+
 		if($this->form_validation->run()===FALSE){
 
-		  $this->load->view('header');		
-		  $this->load->view('crear_evento_deportivo');
+		 //Se guardan los datos, para repoblar el formulario
+			$data['nombre_evento']=$this->input->post('nombre_evento');
+			$data['temperatura_esperada']=$this->input->post('temperatura_esperada');
+			$data['lugar']=$this->input->post('lugar');
+			$data['fecha']=$this->input->post('fecha');
+			$data['direccion_url']=$this->input->post('direccion_url');
+			$data['categoria']=$this->input->post('categoria');
+
+			$this->load->view('header');
+			$this->load->view('crear_evento_deportivo', $data);
+			$this->load->view('footer', $data);
 
         }else{
-        $datos = array('nombre_evento' => $this->input->post('nombre_evento') ,'temperatura_esperada' => $this->input->post('temperatura_esperada'), 'lugar' => $this->input->post('lugar'),'fecha' => $this->input->post('fecha'),'direccion_url' => $this->input->post('direccion_url'),'categoria' => $this->input->post('categoria'));
-      
-        $this->load->view('header');
-        $this->load->model('Evento_deportivo');
-        $eventoDeportivo1=new Evento_deportivo($datos);
-      	$eventoDeportivo1->registrar();
-      	$data['evento']="El evento deportivo fue registrado satisfactoriamente";	
-      	$this->load->view('crear_evento_deportivo',$data);
-      	$this->load->view('footer', $data);
 
-	  }
+       		$this->load->model('Evento_deportivo');
+			$EventoDeportivo1=new Evento_deportivo($this->input->post());
+			if($EventoDeportivo1->registrar($id_usuario)){
+				$data['evento']="el evento deportivo ha sido publicado exitosamente";
+			}else{
+				$data['evento']="El evento deportivo no pudo ser publicado";
+			}
+
+			$this->load->model('Evento_deportivo');
+			$data['misEventos']=$this->Evento_deportivo->consultar_evento_deportivo_por_usuario($id_usuario);
+			
+			$this->load->view('header');
+			$this->load->view('Consultar_evento_deportivo', $data);
+			$this->load->view('footer');
+		}
 	}
+
 	public function consultar_eventos_deportivos()
 	{
+		$this->load->model('Usuario');
+		$usuario1=new Usuario();
+		$id=$usuario1->consultar_id();
 
+		foreach ($id as $ids) {
+			$identificacion=$ids->id; 
+			$data['id_usuario']=$ids->id; 
+		}
+
+		$this->load->model('Evento_deportivo');
+		$data['misEventos']=$this->Evento_deportivo->consultar_evento_deportivo_por_usuario($identificacion);
+
+		$this->load->view('header');
+		$this->load->view('Consultar_eventos_deportivos', $data);
+		$this->load->view('footer');
+
+	}
+	public function editar_evento_deportivo()
+	{
+		$this->load->model('Evento_deportivo');
+		$data['misEventos']=$this->Evento_deportivo->consultar_evento_deportivo();
+
+		$this->load->view('header');
+		$this->load->view('editar_evento_deportivo', $data);
+		$this->load->view('footer');
+	}
+
+
+	public function editar(){
+
+		//Validación de datos ingresados en el formulario
+
+		$this->form_validation->set_rules('nombre_evento', 'nombre_evento', 'required');
+		$this->form_validation->set_rules('temperatura_esperada', 'temperatura_esperada', 'required');
+		$this->form_validation->set_rules('lugar', 'lugar', 'required');
+		$this->form_validation->set_rules('fecha', 'fecha', 'required');
+		$this->form_validation->set_rules('direccion_url', 'direccion_url', 'required');
+		$this->form_validation->set_rules('categoria', 'categoria', 'required');
+
+		//Mensajes
+            // %s es el nombre del campo que ha fallado
+		$this->form_validation->set_message('required','El campo %s es obligatorio'); 
+
+		$id_eventodeportivo=$_GET['itemid'];
+
+		if($this->form_validation->run()===FALSE){
+
+		 //Se guardan los datos, para repoblar el formulario
+			$this->load->model('Evento_deportivo');
+			$data['misEventos']=$this->Evento_deportivo->consultar_evento_deportivo();
+
+			$this->load->view('header');
+			$this->load->view('editar_evento_deportivo', $data);
+			$this->load->view('footer', $data);
+
+        }else{
+
+       		$this->load->model('Evento_deportivo');
+			$EventoDeportivo1=new Evento_deportivo($this->input->post());
+			if($EventoDeportivo1->actualizar($id_eventodeportivo)){
+				$data['evento']="el evento deportivo fue actualizado satisfactoriamente";
+			}else{
+				$data['evento']="El evento deportivo no pudo ser actualizado";
+			}
+
+			$this->load->model('Evento_deportivo');
+			$data['misEventos']=$this->Evento_deportivo->consultar_evento_deportivo_por_usuario($this->input->post('id_usuario'));
+			
+			$this->load->view('header');
+			$this->load->view('Consultar_evento_deportivo', $data);
+			$this->load->view('footer');
+
+		}
+
+	}
+
+
+	public function eliminar_evento_deportivo()
+	{
+		$this->load->model('Evento_deportivo');
+		$EventoDeportivo1=new Evento_deportivo();
+		if($EventoDeportivo1->eliminar()){
+			$data['evento']="el evento deportivo fue eliminado satisfactoriamente";
+		}else{
+			$data['evento']="El evento deportivo no pudo ser eliminado";
+		}
+		
+		$this->load->model('Evento_deportivo');
+			$data['misEventos']=$this->Evento_deportivo->consultar_evento_deportivo_por_usuario($_GET['id_usuario']);
+		$this->load->view('header');
+		$this->load->view('consultar_evento_deportivo', $data);
+		$this->load->view('footer');
 	}
 
 	public function cargar_eventos() {

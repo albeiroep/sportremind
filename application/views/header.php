@@ -8,7 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/datepicker.css"/>
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/estilostabla.css"/>
 </head>
-<body background="<?php echo base_url(); ?>img/fondo.png" >
+<body background="<?php echo base_url(); ?>img/LogoOlimpiadas.jpg" >
 	<header>
 		<div class="container">
 			<h1>Sport Remind</h1>
