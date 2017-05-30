@@ -138,6 +138,12 @@ class Usuario extends CI_Model {
 		}
 	}
 
+	public function todos_datos_usuario($usuario){
+		$this->db->select('id');
+		$query = $this->db->get_where('usuario', ['nombre_usuario' => $usuario]);
+		return $query->result();
+	}
+
 	public function consultar_id()
 	{
 		$this->db->select('id');

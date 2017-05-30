@@ -45,7 +45,9 @@ class ControladorUsuario extends CI_Controller
 	}
 
 	public function provicional(){
-		$this->load->view('inicioPrueba');
+		$this->load->model('Usuario');
+		$data['usuario']= $this->Usuario->todos_datos_usuario('Pedrito');
+		$this->load->view('inicioPrueba',$data);
 	}
 
 	public function cargar_usuarios(){
@@ -66,9 +68,24 @@ class ControladorUsuario extends CI_Controller
 			
 		}
 
+	}
+
+
+	public function editar_perfil(){
+
+			$this->load->model('Deporte');
+			$data['datos']=$this->Deporte->get_all();
+
+			$this->load->model('Usuario');
+			$data['usuario']= $this->Usuario->todos_datos_usuario($this->session->userdata('nombre_usuario'));
+
+
+			$this->load->view('header');
+			$this->load->view('editar_perfil_vista',$data);
+			$this->load->view('footer');
+	}
 		
 	
-	}
 
 	public function crear(){
 

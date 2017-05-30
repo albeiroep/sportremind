@@ -4,7 +4,7 @@
 	<title>Ventana Busqueda</title>
 </head>
 <body>
-	<h1>Ventana busqueda</h1>
+	<h1><?= $usuario ?></h1>
 	<form method="post" action="http://[::1]/sportremind/index.php/ControladorUsuario/cargar_usuarios">
 	<div>
 	<p><label for="nom">Usuario: </label>
