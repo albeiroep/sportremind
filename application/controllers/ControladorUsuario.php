@@ -28,7 +28,7 @@ class ControladorUsuario extends CI_Controller
 
 				$this->load->view('header');
 				$this->load->view('inicio');
-				$this->load->view('footer');
+				
 			}
 
 		}else{
@@ -39,16 +39,11 @@ class ControladorUsuario extends CI_Controller
 
 			$this->load->view('header');
 			$this->load->view('Ingresar', $data);
-			$this->load->view('footer');
+
 
 		}
 	}
 
-	public function provicional(){
-		$this->load->model('Usuario');
-		$data['usuarios']= $this->Usuario->todos_datos_usuario('Pedrito');
-		$this->load->view('inicioPrueba',$data);
-	}
 
 	public function cargar_usuarios(){
 		$msg="";
@@ -58,7 +53,7 @@ class ControladorUsuario extends CI_Controller
 		if ($nom_usu=='') {
 				$this->load->view('header');
 				$this->load->view('inicio');
-				$this->load->view('footer');
+				
 		} else {
 			if (empty($this->Usuario->traer_usuarios($nom_usu))) {
 				$msg="no existe deportista buscado";	
@@ -88,6 +83,8 @@ class ControladorUsuario extends CI_Controller
 			$this->load->view('editar_perfil_vista',$data);
 			$this->load->view('footer');
 	}
+
+
 
 	public function guardar_cambios(){
 		//Validación de datos ingresados en el formulario
@@ -195,7 +192,7 @@ class ControladorUsuario extends CI_Controller
 
 			$this->load->view('header');
 			$this->load->view('Ingresar', $data);
-			$this->load->view('footer', $data);
+		
 
 		}else{
 
@@ -211,7 +208,7 @@ class ControladorUsuario extends CI_Controller
 			$data['usuario']="El usuario fue registrado satisfactoriamente";
 			$this->load->view('header');
 			$this->load->view('Ingresar', $data);
-			$this->load->view('footer');
+			
 		}
 
 	}
@@ -234,7 +231,7 @@ class ControladorUsuario extends CI_Controller
 
 			$this->load->view('header');
 			$this->load->view('Ingresar', $data);
-			$this->load->view('footer');
+			
 
 		}else{
 			$nuevos_datos = array(
@@ -337,7 +334,7 @@ class ControladorUsuario extends CI_Controller
 
 		$this->load->view('header');
 		$this->load->view('ingresar', $data);
-		$this->load->view('footer');
+	
 
 
 	}
@@ -351,7 +348,7 @@ class ControladorUsuario extends CI_Controller
 
 		$this->load->view('header');
 		$this->load->view('Ingresar',$data);
-		$this->load->view('footer');
+	
 
 	}
 
@@ -359,7 +356,7 @@ class ControladorUsuario extends CI_Controller
 
 		$this->load->view('header');
 		$this->load->view('inicio');
-		$this->load->view('footer');
+		
 
 	}
 
@@ -408,7 +405,7 @@ class ControladorUsuario extends CI_Controller
 						echo "<script language=\"javascript\">alert('Para finalizar los cambios ingrese al link enviado a su correo');</script>";
 						$this->load->view('header');
 						$this->load->view('Ingresar', $data);
-						$this->load->view('footer');
+						
 					} else {
 						echo "<script language=\"javascript\">alert('Hubo problemas al enviar el correo. Inténtelo de nuevo');</script>";
 						redirect('ControladorUsuario/ValidarCorreo');
@@ -419,7 +416,7 @@ class ControladorUsuario extends CI_Controller
 					$data['datos']=$this->Deporte->get_all();
 					$this->load->view('header');
 					$this->load->view('Ingresar', $data);
-					$this->load->view('footer');
+					
 				}
 			} else {
 				// Correo inválido

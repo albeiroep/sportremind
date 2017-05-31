@@ -18,12 +18,7 @@
 						<li><a href="<?php echo base_url() ?>index.php/Controlador_entrenamiento/consultar_entrenamiento?itemid=<?=$nom_usuario;?>">Consultar Entrenamientos</a></li>
 					</ul>
 
-					<form action="" class="navbar-form navbar-right" role="search">
-						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Buscar">
-						</div>
-						
-					</form>
+
 				</div>
 			</div>
 		</nav>

@@ -219,7 +219,7 @@ class Controlador_evento_deportivo extends CI_Controller
 				echo "<script language=\"javascript\">alert('No hay eventos registrados en el sistema');</script>";
 				$this->load->view('header');
 				$this->load->view('inicio');
-				$this->load->view('footer');
+				
 			}
 		}
 	}

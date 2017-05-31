@@ -1,5 +1,7 @@
 	<footer>
 		<div class="container">
+
+
 		</div>
 	</footer>
 
@@ -20,5 +22,8 @@
 			});
 		});
 	</script>
+				<?= form_open('ControladorUsuario/index'); ?>
+				<?= form_submit('sbm', 'Inicio', 'class="btn btn-primary"'); ?>
+			    <?= form_close(); ?>
 </body>
 </html>

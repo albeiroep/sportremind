@@ -103,7 +103,7 @@
       </table>
       <br>
 
-      <p class="help-block">* Indica los campos del formulario que son obligatorios</p>
+
       <p class="help-block"> La contraseña debe tener por lo menos 1 letra en mayúscula, <br> 1 en minúscula, 1 digito y 1 caracter especial y tener una longitud mayor o igual a 7</p>
 
       <?= form_submit('sbm', 'Guardar', 'class="btn btn-primary"'); ?>
