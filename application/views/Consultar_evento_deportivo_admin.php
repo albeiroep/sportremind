@@ -85,9 +85,9 @@
 		<td></td>
 		<td></td>
 	</tr>
-	<tr>
 	<?php foreach ($misEventos as $miEvento) {
     ?>
+  <tr>
 		<td><?=$miEvento->nombre_evento?></td>
 		<td><?=$miEvento->temperatura_esperada ?></td>
 		<td><?=$miEvento->lugar ?></td>

@@ -189,17 +189,38 @@ class Controlador_evento_deportivo extends CI_Controller
 		$this->load->model('Evento_deportivo');
 		$miEvento = new Evento_deportivo();
 		$cantidadEventos = $miEvento->traer_cantidad_eventos();
-		if($cantidadEventos > 0){
-			$misEventos = $miEvento->get_all();
-			$data['misEventos'] = $misEventos;
 
-			$this->consultar_eventos_deportivos($data);
+		$this->load->model('Usuario');
+		$Usuario1=new Usuario();
+		$tipo_u=$Usuario1->consultar_tipo_usuario($this->session->userdata('nombre_usuario'));
 
-		} else {
-			echo "<script language=\"javascript\">alert('No hay eventos registrados en el sistema');</script>";
+		foreach ($tipo_u as $tipos) {
+				$tipo=$tipos->tipo_usuario; 
+		}
+
+		$this->load->model('Evento_deportivo');
+		$data['misEventos']=$this->Evento_deportivo->get_all();
+
+		if ($tipo=='Administrador') {
 			$this->load->view('header');
-			$this->load->view('inicio');
+			$this->load->view('Consultar_evento_deportivo_admin', $data);
 			$this->load->view('footer');
+		}else{
+
+			if($cantidadEventos > 0){
+				$misEventos = $miEvento->get_all();
+				$data['misEventos'] = $misEventos;
+
+				$this->load->view('header');
+				$this->load->view('Consultar_evento_deportivo', $data);
+				$this->load->view('footer');
+
+			} else {
+				echo "<script language=\"javascript\">alert('No hay eventos registrados en el sistema');</script>";
+				$this->load->view('header');
+				$this->load->view('inicio');
+				$this->load->view('footer');
+			}
 		}
 	}
 	

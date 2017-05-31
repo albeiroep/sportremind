@@ -16,8 +16,7 @@
 				dateFormat: "yy/mm/dd",
 				changeMonth:true,
 				changeYear:true,
-				monthNamesShort: [ "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Agosto", "Sept", "Oct", "Nov", "Dic" ],
-				maxDate: "0"
+				monthNamesShort: [ "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Agosto", "Sept", "Oct", "Nov", "Dic" ]
 			});
 		});
 	</script>
