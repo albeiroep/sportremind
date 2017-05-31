@@ -20,9 +20,9 @@
 						<li><a href="<?php echo base_url() ?>index.php/ControladorUsuario/logoff">Salir de sesión</a></li>
 					</ul>
 
-					<form action="" class="navbar-form navbar-right" role="search">
+					<form method="post" action="<?php echo base_url() ?>index.php/ControladorUsuario/cargar_usuarios" class="navbar-form navbar-right" role="search">
 						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Buscar">
+							<input type="text" class="form-control" placeholder="Buscar" name="nom">
 						</div>
 						
 					</form>

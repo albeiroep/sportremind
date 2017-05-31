@@ -55,8 +55,10 @@ class ControladorUsuario extends CI_Controller
 		$this->load->model('Usuario');
 		$nom_usu=$this->input->post('nom');
 
-		if (empty($nom_usu)) {
-			$this->load->view('inicioPrueba');
+		if ($nom_usu=='') {
+				$this->load->view('header');
+				$this->load->view('inicio');
+				$this->load->view('footer');
 		} else {
 			if (empty($this->Usuario->traer_usuarios($nom_usu))) {
 				$msg="no existe deportista buscado";	
@@ -64,7 +66,9 @@ class ControladorUsuario extends CI_Controller
 
 			$data['msg']=$msg;
 			$data['usuarios']=$this->Usuario->traer_usuarios($nom_usu);
+			$this->load->view('header');
 			$this->load->view('BusquedaUsuario',$data);
+			$this->load->view('footer');
 			
 		}
 
