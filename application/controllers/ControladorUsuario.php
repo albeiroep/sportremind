@@ -93,6 +93,7 @@ class ControladorUsuario extends CI_Controller
 		$this->form_validation->set_rules('apellidos', 'apellidos', 'required');
 		$this->form_validation->set_rules('ciudad', 'ciudad', 'required');
 		$this->form_validation->set_rules('deporte', 'deporte', 'required');
+		
 
 		$this->form_validation->set_rules('contraseña', 'contraseña', 'required|min_length[8]|callback_is_password_strong');
 		$this->form_validation->set_rules('repetir_contrasena', 'repetir contraseña', 'required|matches[contraseña]');
@@ -112,6 +113,9 @@ class ControladorUsuario extends CI_Controller
 			//Para cargar los nombres de los deportes en la lista desplegable
 			$this->load->model('Deporte');
 			$data['datos']=$this->Deporte->get_all();
+
+			$this->load->model('Usuario');
+			$data['usuarios']= $this->Usuario->todos_datos_usuario($this->session->userdata('nombre_usuario'));
 
 			//Se guardan los datos, para repoblar el formulario
 			$data['nombre']=$this->input->post('nombre');

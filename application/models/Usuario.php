@@ -48,6 +48,7 @@ class Usuario extends CI_Model {
 	}
 	
 
+
 	public function validar() {
 		$errores = [];
 
