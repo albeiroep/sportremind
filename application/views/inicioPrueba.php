@@ -4,7 +4,12 @@
 	<title>Ventana Busqueda</title>
 </head>
 <body>
-	<h1><?= $usuario ?></h1>
+
+	<?php foreach ($usuarios as $usuario): ?>
+	<tr>
+		<td><?= $usuario->id ?></td>
+	<?php endforeach; ?>
+
 	<form method="post" action="http://[::1]/sportremind/index.php/ControladorUsuario/cargar_usuarios">
 	<div>
 	<p><label for="nom">Usuario: </label>

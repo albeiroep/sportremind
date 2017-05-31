@@ -46,7 +46,7 @@ class ControladorUsuario extends CI_Controller
 
 	public function provicional(){
 		$this->load->model('Usuario');
-		$data['usuario']= $this->Usuario->todos_datos_usuario('Pedrito');
+		$data['usuarios']= $this->Usuario->todos_datos_usuario('Pedrito');
 		$this->load->view('inicioPrueba',$data);
 	}
 
@@ -77,13 +77,76 @@ class ControladorUsuario extends CI_Controller
 			$data['datos']=$this->Deporte->get_all();
 
 			$this->load->model('Usuario');
-			$data['usuario']= $this->Usuario->todos_datos_usuario($this->session->userdata('nombre_usuario'));
+			$data['usuarios']= $this->Usuario->todos_datos_usuario($this->session->userdata('nombre_usuario'));
 
 
 			$this->load->view('header');
 			$this->load->view('editar_perfil_vista',$data);
 			$this->load->view('footer');
 	}
+
+	public function guardar_cambios(){
+		//Validación de datos ingresados en el formulario
+
+		$this->form_validation->set_rules('nombre', 'nombre', 'required');
+		$this->form_validation->set_rules('apellidos', 'apellidos', 'required');
+		$this->form_validation->set_rules('ciudad', 'ciudad', 'required');
+		$this->form_validation->set_rules('deporte', 'deporte', 'required');
+
+		$this->form_validation->set_rules('contraseña', 'contraseña', 'required|min_length[8]|callback_is_password_strong');
+		$this->form_validation->set_rules('repetir_contrasena', 'repetir contraseña', 'required|matches[contraseña]');
+
+		//Mensajes
+            // %s es el nombre del campo que ha fallado
+		$this->form_validation->set_message('required','El campo %s es obligatorio'); 
+		$this->form_validation->set_message('valid_email','El campo %s debe ser un correo valido'); 
+		$this->form_validation->set_message('matches','El campo %s debe ser igual al campo repetir contraseña');
+
+		$this->form_validation->set_message('is_password_strong','La %s no tiene la complejidad requerida');
+
+		//Si los datos ingresados en el formulario no son correctos se regresa  a la vista sin guardar los datos en la bd.
+
+		if($this->form_validation->run()===FALSE){
+
+			//Para cargar los nombres de los deportes en la lista desplegable
+			$this->load->model('Deporte');
+			$data['datos']=$this->Deporte->get_all();
+
+			//Se guardan los datos, para repoblar el formulario
+			$data['nombre']=$this->input->post('nombre');
+			$data['apellidos']=$this->input->post('apellidos');
+			$data['ciudad']=$this->input->post('ciudad');
+			$data['deporte1']=$this->input->post('deporte');
+			$data['correo']=$this->input->post('correo');
+			$data['nombre_usuario']=$this->input->post('nombre_usuario');
+			$data['contraseña']=$this->input->post('contraseña');
+			$data['repetir_contraseña']=$this->input->post('repetir_contrasena');
+
+			$this->load->view('header');
+			$this->load->view('editar_perfil_vista', $data);
+			$this->load->view('footer', $data);
+
+		}else{
+
+			$this->load->model('Usuario');
+			$Usuario1=new Usuario($this->input->post());
+			$Usuario1->validar();
+			$Usuario1->actualizar();
+			
+			//Para cargar los nombres de los deportes en la lista desplegable
+			$this->load->model('Deporte');
+			$data['datos']=$this->Deporte->get_all();
+
+			$data['nom_usuario']= $this->session->userdata('nombre_usuario');
+			
+			$data['usuario']="El usuario fue actualizado satisfactoriamente";
+			$this->load->view('header');
+			$this->load->view('Perfil', $data);
+			$this->load->view('footer');
+		}
+
+	}
+	
 		
 	
 

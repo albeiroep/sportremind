@@ -108,6 +108,22 @@ class Usuario extends CI_Model {
 		return $query->result();
 	}
 
+	public function actualizar() {
+		$data = [
+			'nombre' => $this->nombre,
+			'apellidos' => $this->apellidos,
+			'deporte' => $this->deporte,
+			'ciudad' => $this->ciudad,
+			'correo' => $this->correo,
+			'nombre_usuario' => $this->nombre_usuario,
+			'contraseña' => $this->contraseña,
+			'tipo_usuario' => $this->tipo_usuario,
+		];
+
+		$this->db->where('nombre_usuario',$this->nombre_usuario);
+		return $this->db->update('usuario', $data);
+	}
+
 	public function registrar() {
 		$data = [
 			'nombre' => $this->nombre,
@@ -139,7 +155,7 @@ class Usuario extends CI_Model {
 	}
 
 	public function todos_datos_usuario($usuario){
-		$this->db->select('id');
+
 		$query = $this->db->get_where('usuario', ['nombre_usuario' => $usuario]);
 		return $query->result();
 	}

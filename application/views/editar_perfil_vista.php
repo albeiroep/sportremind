@@ -6,23 +6,25 @@
     $deporte[$dato->nombre]=$dato->nombre;
   }
 
-  $nombre=(isset($nombre)) ? $nombre=$nombre : $nombre= $usuario->id;
+  foreach ($usuarios as $usuario){
 
-  $apellidos=(isset($apellidos)) ? $apellidos=$apellidos : $apellidos='';
+  $nombre=(isset($nombre)) ? $nombre=$nombre : $nombre= $usuario->nombre;
 
-  $ciudad=(isset($ciudad)) ? $ciudad=$ciudad : $ciudad='';
+  $apellidos=(isset($apellidos)) ? $apellidos=$apellidos : $apellidos=$usuario->apellidos;
 
-  $correo=(isset($correo)) ? $correo=$correo : $correo='';
+  $ciudad=(isset($ciudad)) ? $ciudad=$ciudad : $ciudad=$usuario->ciudad;
 
-  $nombre_usuario=(isset($nombre_usuario)) ? $nombre_usuario=$nombre_usuario : $nombre_usuario='';
+  $correo=(isset($correo)) ? $correo=$correo : $correo=$usuario->correo;
 
-  $contraseña=(isset($contraseña)) ? $contraseña=$contraseña : $contraseña='';
+  $nombre_usuario=(isset($nombre_usuario)) ? $nombre_usuario=$nombre_usuario : $nombre_usuario=$usuario->nombre_usuario;
 
-  $repetir_contraseña=(isset($repetir_contraseña)) ? $repetir_contraseña=$repetir_contraseña : $repetir_contraseña='';
+  $contraseña=(isset($contraseña)) ? $contraseña=$contraseña : $contraseña=$usuario->contraseña;
 
-  $deporte1=(isset($deporte1)) ? $deporte1=$deporte1 : $deporte1='';
+  $repetir_contraseña=(isset($repetir_contraseña)) ? $repetir_contraseña=$repetir_contraseña : $repetir_contraseña=$usuario->contraseña;
 
-  
+  $deporte1=(isset($deporte1)) ? $deporte1=$deporte1 : $deporte1=$usuario->deporte;
+
+  }
 
   $nom = array(
           'name'        => 'nombre',
@@ -78,7 +80,7 @@
   <div class="row" style="background: rgba(255, 255, 255, .8)"> 
     <div class="col-md-7">
       <p><h1>Editar Perfil</h1></p>
-      <?= form_open('ControladorUsuario/crear'); ?>
+      <?= form_open('ControladorUsuario/guardar_cambios'); ?>
         <?php echo validation_errors(); ?>
         <table border="0">
          <tr>
@@ -104,14 +106,9 @@
       <p class="help-block">* Indica los campos del formulario que son obligatorios</p>
       <p class="help-block"> La contraseña debe tener por lo menos 1 letra en mayúscula, <br> 1 en minúscula, 1 digito y 1 caracter especial y tener una longitud mayor o igual a 7</p>
 
-      <?= form_submit('sbm', 'Crear', 'class="btn btn-primary"'); ?>
+      <?= form_submit('sbm', 'Guardar', 'class="btn btn-primary"'); ?>
 
     <?= form_close(); ?>
-    <br>
-    <?php if(isset($usuario)):
-    echo $usuario;
-    endif;
-    ?>
     
     <?php if(isset($mensaje)):
     echo $mensaje;
